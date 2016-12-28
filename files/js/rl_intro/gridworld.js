@@ -1,4 +1,5 @@
 var gridworld,vals,vals_old,pe_id;
+console.log("What")
 pe_id = -1;
 var vi_id = -1;
 // init = rgb(0,4,40);
