@@ -733,7 +733,7 @@ Another important assumption made is that the world if fully observable. This me
 <center>
 
 <img src="/img/rl_intro/aliased_1.png" width="200px" style="display:inline;margin-right:5px" />
-
+<img src="/img/rl_intro/aliased_2.png" width="200px" style="display:inline;margin-right:5px" />
 </center>
 
 In the picture to the left, the agent can "see" only the 8 neighbouring cells and decides to go down and to the left following some policy in order to go to one of the corners. It then observes that it's hit a corner and the goal isn't here and leaves by trying to move up and towards the right. It's right back where it was before the whole thing started because it can only observe the world partially and cannot see that the goal is towards the other end. It also has no "memory" because of the Markovian Property and cannot reasonably expect to solve problems like this. One way to remedy this would be to explicitly add it memory or some extra information to its state like corners it's already visited but since we're interested in building general purpose AI, this wouldn't be fair.
