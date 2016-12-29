@@ -706,7 +706,7 @@ A pitfall of the $\epsilon$-Greedy approach is that it treats all actions equall
 
 
 \begin{equation}
-P_t(a) = \frac{q_t(a)/\tau}{\sum_{i=1}^n q_t(i)/\tau }
+Prob(a) = \frac{e^{\frac{Q(s,a)}{\tau}}} {e^{\sum_{a' \in A } \frac{Q(s,a')}{\tau} }}
 \end{equation}
 
 
