@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>About Machines That Learn &amp; Think</title><link>http://ummavi.github.io/</link><description>A blog where I plan to lay down thoughts about AI (Particularly Reinforcement Learning) and understanding of concepts and papers I read about them.</description><atom:link type="application/rss+xml" href="http://ummavi.github.io/rss.xml" rel="self"></atom:link><language>en</language><lastBuildDate>Thu, 29 Dec 2016 10:49:29 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Introduction to Reinforcement Learning</title><link>http://ummavi.github.io/posts/introduction-to-reinforcement-learning/</link><dc:creator>Avinash Ummadisingu</dc:creator><description>&lt;div&gt;&lt;script src="http://ummavi.github.io/js/rl_intro/gridworld.js"&gt; &lt;/script&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>About Machines That Learn &amp; Think</title><link>http://ummavi.github.io/</link><description>A blog where I plan to lay down thoughts about AI (Particularly Reinforcement Learning) and understanding of concepts and papers I read about them.</description><atom:link href="http://ummavi.github.io/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Fri, 30 Dec 2016 11:47:20 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Introduction to Reinforcement Learning</title><link>http://ummavi.github.io/posts/introduction-to-reinforcement-learning/</link><dc:creator>Avinash Ummadisingu</dc:creator><description>&lt;div&gt;&lt;script src="http://ummavi.github.io/js/rl_intro/gridworld.js"&gt; &lt;/script&gt;
 
 &lt;h4&gt;"When a configuration is reached for which the action is undetermined, a random choice for the missing data is made and the appropriate entry is made in the description, tentatively, and is applied. When a pain stimulus occurs all tentative entries are cancelled, and when a pleasure stimulus occurs they are all made permanent." - Alan Turing (1948)&lt;/h4&gt;
 &lt;p&gt;Reinforcement Learning deals with problems where an agent needs to learn to interact with its environment through a number of actions and try to maximise the total reward it gets over time. The crux of it lies in the fact that the agent is not taught what actions to take when but has to discover this on its own through its repeated interactions with the environment. This feels natural to us since it's an integral part of how humans or animals learn and much of the techniques developed are inspired by Psychology and Neuroscience. &lt;/p&gt;
@@ -7,8 +7,9 @@
 &lt;p&gt;While most of the key concepts in Reinforcement Learning were decades ago, explosive success in Deep Learning has given a second wind to Reinforcement Learning and techniques combining them are often called Deep Reinforcement Learning. &lt;/p&gt;
 &lt;p&gt;The goal of writing this introductory series of posts is to demonstrate how simple but powerful the key ideas in RL are and how easy it is to get an understanding of what the state of the art performing system as of last year was. I'll make it a point to explain the math as simply and intuitively as I possibly can and luckily, a lot of the math behind RL is very easy to understand through visualization. Before I actually start with anything, I'd like to point out that if you'd like to know more about Reinforcement Learning, &lt;a href="https://webdocs.cs.ualberta.ca/~sutton/book/the-book.html"&gt;Sutton &amp;amp; Barto's Book on RL&lt;/a&gt; is very approachable even without too much background knowledge and considered a bible. I'll be using this book heavily throughout. I'll also be sticking to their notation since it's popular and will hopefully be easier to look things up from there when it's needed.&lt;/p&gt;
 &lt;h2&gt;The Reinforcement Learning Problem&lt;/h2&gt;
-&lt;p&gt;Reinforcement Learning solves a class of problems where an agent needs to learn to interact with the environment through a number of actions it can perform in order to maximise its total reward and achieve its goal.&lt;/p&gt;
+&lt;p&gt;Reinforcement Learning solves a class of problems where an agent needs to learn to interact with the environment through a number of actions it can perform in order to maximize its total reward and achieve its goal.&lt;/p&gt;
 &lt;p&gt;&lt;img src="http://ummavi.github.io/img/rl_components.png"&gt;&lt;/p&gt;
+&lt;p&gt;In the typical Mario scenario, Mario's the agent and what we see on screen is the environment. The 4 keys for movement as well as the "a" and "b" keys are actions to the game. Positive rewards can be in the form of an increase in score and a gives a large negative reward for the loss of life or game-over . We could also set a small negative reward for the time taken to encourage our agent to finish the round as quickly as possible.&lt;/p&gt;
 &lt;p&gt;Let's look at the typical components of an RL system in the context of a simple environment often called gridworld.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;State ($s$)&lt;/strong&gt;: The state is the what the agent can observe of an environment. It's the data the agent has to make its decisions based on. Typically, this consists of things like sensor readings in robotics or plain images. In a simple example shown below, we have our agent denoted by the blue ball in the maze with the end state in green. This entire maze and all the pieces in it denotes the state of the game and describes what the agent sees. &lt;/li&gt;
@@ -23,7 +24,7 @@
 &lt;/ul&gt;
 &lt;p&gt;&lt;img src="http://ummavi.github.io/img/rl_intro/reward.png" width="200px" height="200px"&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;State-Transition Function($P$)&lt;/strong&gt;: A state transition function governs how an agent in one state goes to the next when it performs a particular action. This state transition function is either deterministic where an action always takes you to that same state or is stochastic to model games of chance and situations like "moving North has a 20% chance of taking you south". &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;State-Transition Function($P$)&lt;/strong&gt;: A state transition function governs how an agent in one state goes to the next when it performs a particular action. This state transition function is either deterministic where an action always takes you to that same state or is stochastic to model games of chance like the probability of drawing a particular card in Poker or a dice roll. This includes situations like "Opening treasure chest has a 20% chance of getting you the key". Abstractly, this would be represented like: &lt;strong&gt;$P$(near_chest,open_treasure,got_key) = 0.2&lt;/strong&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;The Reward Function and the State-Transition Function are typically part of the Environment Dynamics and may not be directly accessible by the agent.&lt;/p&gt;
 &lt;ul&gt;
@@ -222,7 +223,7 @@ var highlightNextEle = function(){
 
 &lt;p&gt;As mentioned before, the end goal of this is to derive a policy and there are a couple of ways it can be done. We can either estimate it directly (by estimating a Policy Function using Policy Gradient Methods) or indirectly (by finding intermediate functions and deriving a policy from that). We'll first look at the indirect way to solve this MDP and find the optimal behaviour by estimating something called a value function.&lt;/p&gt;
 &lt;h3&gt;Value Function ($v$)&lt;/h3&gt;
-&lt;p&gt;A value function is a measure of how "good" a state is. Given a state $s$ and you're following a policy $\pi$, it's value $v^{\pi}(s)$ is the expected cumulative reward of being in that state. Mathematically, this is represented as complicated looking but surprisingly simple equation:&lt;/p&gt;
+&lt;p&gt;A value function is a measure of how "good" a state is. Given a state $s$ and you're following a policy $\pi$, it's value $v^{\pi}(s)$ is the expected sum of reward of being in that state. Mathematically, this is represented as complicated looking but surprisingly simple equation:&lt;/p&gt;
 &lt;p&gt;\begin{equation}
 v_{k+1}^{\pi} (s) = \sum_{a \in A} \pi(a|s) (\sum_{s'\in S} P^a_{ss'}(R^a_{ss'} + \gamma v_k(s'))
 \end{equation}&lt;/p&gt;
@@ -230,6 +231,7 @@ v_{k+1}^{\pi} (s) = \sum_{a \in A} \pi(a|s) (\sum_{s'\in S} P^a_{ss'}(R^a_{ss'} 
 &lt;p&gt;The first $\sum_{a \in A} \pi(a|s)$ term is just a way to express what's happening at the first node in our backup diagram. We have multiple actions we can perform and the probability of picking an action given the current state is given by the policy($\pi$) we're currently following. &lt;/p&gt;
 &lt;p&gt;The next $\sum_{s'\in S} P^a_{ss'}$ part represents the second level of our backup diagram where there are multiple states we can end up in after we've picked our action and the State Transition Function (P) gives us a probability value assigned to each of the possible target states.&lt;/p&gt;
 &lt;p&gt;This is very reminiscent of what we do in Probability using a &lt;a href="http://www.onlinemathlearning.com/tree-diagram.html"&gt; tree diagram &lt;/a&gt;. To find the probability of ending up in one of the target states, it's the product of the probability of picking that action and the chances of ending up there. We then use these probabilities to weigh the value function at that state. This is like saying if I have 6 possible states to end up in and a $\frac{1}{6}$ chance of ending up in a state that has a value of +1 and $\frac{5}{6}$ chances of a value 0, then my current value is $\frac{1}{6}$x$1$ + $\frac{5}{6}$x$0$ = $0.16$. Visually, the value function propagates in the reverse direction like the diagram below. &lt;/p&gt;
+&lt;p&gt;We can think of it as two "stages". First, we go through the transitions and see what are the possible states we can end up in. This is represented in blue. Second, we take the values and start "backing" them up. The first summation is at the State Transition level $(\sum_{s'\in S} P^a_{ss'}(R^a_{ss'} + \gamma v_k(s'))$ as represented by the region that first becomes red below. We take the value functions of the states we can end up in when we pick that action and sum it up while multiplying it with the probability of ending up in that state. We then take those values and further sum it back while multiplying with the policy in $\sum_{a \in A} \pi(a|s)$ as represented by the second part that becomes red.&lt;/p&gt;
 &lt;div id="cy2"&gt;&lt;/div&gt;
 
 &lt;script&gt;
@@ -303,11 +305,11 @@ var cy2 = cytoscape({
     }),
   elements: {
       nodes: [
-        { data: { id: 's', size: '24px',level:1 } },
-        { data: { id: 'N', size: '12px' ,level:2} },
-        { data: { id: 'S', size: '12px' ,level:2} },
-        { data: { id: 'E', size: '12px' ,level:2} },
-        { data: { id: 'W', size: '12px' ,level:2} },
+        { data: { id: 's', size: '24px',level:2 } },
+        { data: { id: 'N', size: '12px' ,level:3} },
+        { data: { id: 'S', size: '12px' ,level:3} },
+        { data: { id: 'E', size: '12px' ,level:3} },
+        { data: { id: 'W', size: '12px' ,level:3} },
 
         { data: { id: 's11', size: '24px', level:3 } },
         { data: { id: 's12', size: '24px', level:3 } },
@@ -353,9 +355,8 @@ var cy2 = cytoscape({
 
 
 var valiter = cy2.elements().bfs('#s', function(){}, true);
+var val_level = 0;
 
-
-var val_level = 4;
 var val_highlightNextEle = function(){
     for (var i = 0; i &lt;  valiter.path.length; i++) 
         if (valiter.path[i].data().level==val_level){
@@ -365,13 +366,24 @@ var val_highlightNextEle = function(){
 
     if (val_level==0){
         for (var i = 0; i &lt;  valiter.path.length; i++){
+            valiter.path[i].removeClass('highlighted');
             valiter.path[i].removeClass('highlighted_back');
             valiter.path[i].css('line-color','#ddd');
             valiter.path[i].css('background-color','#000');
             valiter.path[i].css('target-arrow-color','#ddd');
         }
-        val_level=4;
     }
+
+    if (val_level==-1){
+      for (var i = 0; i &lt;  valiter.path.length; i++){
+            valiter.path[i].removeClass('highlighted_back');
+            valiter.path[i].addClass('highlighted');
+        }
+      val_level=5;
+
+    }
+
+
     val_level+=-1;
 
 };
@@ -381,13 +393,13 @@ var val_highlightNextEle = function(){
 }); 
 &lt;/script&gt;
 
-&lt;p&gt;To see how this actually works in action, let's describe a game that was partially introduced already - gridworld. As the name suggests, it's simply a 2D &lt;strong&gt;n&lt;/strong&gt;x&lt;strong&gt;n&lt;/strong&gt; grid where the agent occupies one position of the grid. At each point, there are 4 possible actions- North, South, East or West. The agent starts off in one of these grids and needs to reach the goal state for which it receives a +1 reward.In our gridworld, we know exactly where we'll end up if we try going North so $P^a_{ss'}$=1 for that $s'$ and 0 for everything else. We can simplify the equation to reflect this by
+&lt;p&gt;To see how this actually works in action, let's describe a game that was partially introduced already - gridworld. As the name suggests, it's simply a 2D &lt;strong&gt;n&lt;/strong&gt;x&lt;strong&gt;n&lt;/strong&gt; grid where the agent occupies one position of the grid. At each point, there are 4 possible actions- North, South, East or West. The agent starts off in one of these cells and needs to reach the goal state for which it receives a +1 reward.In our gridworld, we know exactly where we'll end up if we try going North so $P^a_{ss'}$=1 for that $s'$ and 0 for everything else. We can simplify the equation to reflect this by
 \begin{equation}
 v_{k+1}(s) = \sum_{a \in A} \pi(a|s) (R^a_{ss'} + \gamma v_k(s') 
 \end{equation}&lt;/p&gt;
 &lt;p&gt;Lastly, the $\gamma$ term is what's called a discount factor. It's a mechanism to weigh the importance of immediate rewards vs rewards far off in the future. A value close to 1 would imply we care about the long-term expected reward while a value closer to 0 means we care more about immediate rewards.&lt;/p&gt;
 &lt;h2&gt;Policy Evaluation&lt;/h2&gt;
-&lt;p&gt;Policy Evaluation is a way to evaluate an already known policy and see how well you'd perform following it. It's a direct application of the above value function equation. This is a very simplistic example to show how values propagate over time and slowly converge towards their true values. &lt;/p&gt;
+&lt;p&gt;Policy Evaluation is a way to evaluate an already known policy and see how well you'd perform following it. It's a direct application of the above value function equation. This is a simplistic example to show how values propagate over time and slowly converge towards their true values in gridworld.  &lt;/p&gt;
 &lt;div style="width:700px;margin-left: auto;margin-right: auto;"&gt;
 
     &lt;div id="gw_v" style="float:right;width:300px"&gt;&lt;/div&gt;
@@ -395,19 +407,47 @@ v_{k+1}(s) = \sum_{a \in A} \pi(a|s) (R^a_{ss'} + \gamma v_k(s')
     &lt;div&gt;
     &lt;table cellpadding="0" cellspacing="0" style="table-layout:fixed;width:185px;margin-left: auto;margin-right: auto"&gt;
     &lt;tr&gt; &lt;td colspan="3" style="text-align:center"&gt;Policy &lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt; &lt;td&gt; &lt;/td&gt; &lt;td style="text-align:center"&gt; &lt;input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),4,4)' size="6" type="text" id="pe_up" value="0.25"&gt; &lt;/td&gt; &lt;td&gt; &lt;/td&gt; &lt;/tr&gt; 
-    &lt;tr&gt; &lt;td style="text-align:center"&gt; &lt;input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),4,4)' size="6" type="text" id="pe_left" value="0.25"&gt; &lt;/td&gt; &lt;td&gt; &lt;/td&gt; &lt;td style="text-align:center"&gt; &lt;input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),4,4)' size="6" type="text" id="pe_right" value="0.25"&gt; &lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt; &lt;td&gt; &lt;/td&gt; &lt;td style="text-align:center"&gt; &lt;input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),4,4)' size="6" type="text" id="pe_down" value="0.25"&gt; &lt;/td&gt;&lt;td&gt; &lt;/td&gt; &lt;/tr&gt; 
+    &lt;tr&gt; &lt;td&gt; &lt;/td&gt; &lt;td style="text-align:center"&gt; &lt;input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),5,5)' size="6" type="text" id="pe_up" value="0.25"&gt; &lt;/td&gt; &lt;td&gt; &lt;/td&gt; &lt;/tr&gt; 
+    &lt;tr&gt; &lt;td style="text-align:center"&gt; &lt;input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),5,5)' size="6" type="text" id="pe_left" value="0.25"&gt; &lt;/td&gt; &lt;td&gt; &lt;/td&gt; &lt;td style="text-align:center"&gt; &lt;input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),5,5)' size="6" type="text" id="pe_right" value="0.25"&gt; &lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt; &lt;td&gt; &lt;/td&gt; &lt;td style="text-align:center"&gt; &lt;input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),5,5)' size="6" type="text" id="pe_down" value="0.25"&gt; &lt;/td&gt;&lt;td&gt; &lt;/td&gt; &lt;/tr&gt; 
     &lt;/table&gt;
 
 
-    &lt;span class="bton" style="margin-bottom:0px" onclick="$('#pe_up').val('0.25');$('#pe_down').val('0.25');$('#pe_left').val('0.25');$('#pe_right').val('0.25');pe_gridworld($('#gw_f'),$('#gw_v'),4,4)"&gt;Uniform Random&lt;/span&gt;
-    &lt;span class="bton" style="margin-bottom:0px" onclick="$('#pe_up').val('1');$('#pe_down').val('0');$('#pe_left').val('0');$('#pe_right').val('0');pe_gridworld($('#gw_f'),$('#gw_v'),4,4)"&gt;Always Up&lt;/span&gt;
-    &lt;span class="bton" style="margin-bottom:0px" onclick="$('#pe_up').val('0');$('#pe_down').val('0');$('#pe_left').val('0');$('#pe_right').val('1');pe_gridworld($('#gw_f'),$('#gw_v'),4,4)"&gt;Always Right&lt;/span&gt;
+    &lt;span class="bton" style="margin-bottom:0px" onclick="$('#pe_up').val('0.25');$('#pe_down').val('0.25');$('#pe_left').val('0.25');$('#pe_right').val('0.25');pe_gridworld($('#gw_f'),$('#gw_v'),5,5)"&gt;Uniform Random&lt;/span&gt;
+    &lt;span class="bton" style="margin-bottom:0px" onclick="$('#pe_up').val('1');$('#pe_down').val('0');$('#pe_left').val('0');$('#pe_right').val('0');pe_gridworld($('#gw_f'),$('#gw_v'),5,5)"&gt;Always Up&lt;/span&gt;
+    &lt;span class="bton" style="margin-bottom:0px" onclick="$('#pe_up').val('0');$('#pe_down').val('0');$('#pe_left').val('0');$('#pe_right').val('1');pe_gridworld($('#gw_f'),$('#gw_v'),5,5)"&gt;Always Right&lt;/span&gt;
     &lt;/div&gt;
 
 &lt;p&gt;&lt;/p&gt;&lt;/div&gt;
-&lt;span style="font-size:10px"&gt;The Uniform Random Policy is the default value and shows you the value of every state if you randomly pick one of your 4 options every time with equal probability. Note: You can edit these values at will. They are normalized to a [0,1] range and taken as probabilities. The computation will only run for 100 iterations. &lt;/span&gt; 
+&lt;span style="font-size:10px"&gt;The Uniform Random Policy is the default value and shows you the value of every state if you randomly pick one of your 4 options every time with equal probability. Note: You can edit these values at will. They are normalized to a [0,1] range and taken as probabilities. The computation will only run for 40 iterations. &lt;/span&gt; 
+&lt;p&gt;A code snippet to see how Policy Evaluation can be implemented in python below:&lt;/p&gt;
+&lt;p&gt;&lt;span class="bton" style="margin-bottom:0px" onclick="$('#pol_eval_code').toggle(0.5);"&gt;Show/Hide Code&lt;/span&gt;
+&lt;/p&gt;&lt;div id="pol_eval_code"&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;evaluate_policy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;policy&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;'''&lt;/span&gt;
+&lt;span class="sd"&gt;    Policy evaluation implementation. &lt;/span&gt;
+&lt;span class="sd"&gt;    Checks for tolerance by looking at the maximum difference between values from one iteration to the next.&lt;/span&gt;
+&lt;span class="sd"&gt;    '''&lt;/span&gt;
+    &lt;span class="n"&gt;V&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;zeros&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MAP&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shape&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;dtype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;float32&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;#Initialize the Values to zero with the size of the map&lt;/span&gt;
+    &lt;span class="n"&gt;maxdiff&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tol&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; 
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="n"&gt;maxdiff&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;tol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;maxdiff&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;states&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;is_valid_location&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="k"&gt;continue&lt;/span&gt; &lt;span class="c1"&gt;#Don't evaluate for blocked squares&lt;/span&gt;
+            &lt;span class="n"&gt;v&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; 
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;get_valid_actions&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="c1"&gt;#Iterate through all possible actions from current state&lt;/span&gt;
+                &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;target&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;),(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)]:&lt;/span&gt; &lt;span class="c1"&gt;#Iterate through all possible end states&lt;/span&gt;
+                    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;is_valid_location&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; 
+                        &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="n"&gt;policy&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;P&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;gamma&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;V&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt;
+            &lt;span class="n"&gt;maxdiff&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;max&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;maxdiff&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nb"&gt;abs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;V&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+            &lt;span class="n"&gt;V&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt; &lt;span class="c1"&gt;#Set V to the updated value.&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;V&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;/div&gt;
+
 &lt;h2&gt;Policy Iteration&lt;/h2&gt;
 &lt;p&gt;Now that you've evaluated your policy, what can you do with it? Since our end goal is to find the best policy, we can make use of this evaluated policy to generate a new policy out of it. We can do this by simply looking at the value function above and at each state, picking the action that will take you to the neighbour with the best value. This is often called acting "greedily" with respect to the policy that you evaluated.  &lt;/p&gt;
 &lt;p&gt;To improve our policy further, we can go for another round of process described above. We can evaluate the greedy policy that we generated and again generate a new (and better) one. This process is known as Policy Iteration. It's shown that this process will eventually converge to the optimal policy $\pi^*$. &lt;/p&gt;
@@ -416,17 +456,61 @@ v_{k+1}(s) = \sum_{a \in A} \pi(a|s) (R^a_{ss'} + \gamma v_k(s')
 &lt;figcaption&gt;Policy Iteration. Image Credits: Sutton &amp;amp; Barto&lt;/figcaption&gt;
 &lt;/figure&gt;
 
+&lt;p&gt;&lt;span class="bton" style="margin-bottom:0px" onclick="$('#pol_iter_code').toggle(0.5);"&gt;Show/Hide Code&lt;/span&gt;
+&lt;/p&gt;&lt;div id="pol_iter_code"&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;derive_greedy_policy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;V&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;'''&lt;/span&gt;
+&lt;span class="sd"&gt;    Derive a greedy policy from the Value Function V&lt;/span&gt;
+&lt;span class="sd"&gt;    '''&lt;/span&gt;
+    &lt;span class="n"&gt;Pol&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;states&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;
+        &lt;span class="n"&gt;maxval&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;maxaction&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;999999&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s2"&gt;"west"&lt;/span&gt;
+        &lt;span class="c1"&gt;#Evaluate all the actions and find the one with the maximum value.&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;get_valid_actions&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; 
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;target&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;),(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)]:&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;is_valid_location&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                    &lt;span class="n"&gt;cval&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;P&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;gamma&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;V&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt;
+                    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;cval&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;maxval&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;maxval&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;maxaction&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cval&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; 
+
+        &lt;span class="c1"&gt;#Select the action greedily&lt;/span&gt;
+        &lt;span class="n"&gt;Pol&lt;/span&gt;&lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'east'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;0.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'west'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;0.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'north'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;0.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'south'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;0.&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="n"&gt;Pol&lt;/span&gt;&lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)][&lt;/span&gt;&lt;span class="n"&gt;maxaction&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1.&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Pol&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;policy_iteration&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Pol&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;'''&lt;/span&gt;
+&lt;span class="sd"&gt;    Drive the Policy Iteration by calling evaluation and improvement till convergence &lt;/span&gt;
+&lt;span class="sd"&gt;    '''&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+
+        &lt;span class="n"&gt;V&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;evaluate_policy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Pol&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="n"&gt;Pol_new&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;derive_policy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;V&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;Pol_new&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;Pol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"Policy Iteration converged after"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s2"&gt;"steps"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="k"&gt;break&lt;/span&gt;
+
+        &lt;span class="n"&gt;Pol&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Pol_new&lt;/span&gt;
+
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;V&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;/div&gt;
+
 &lt;h2&gt;Value Iteration&lt;/h2&gt;
 &lt;p&gt;One way to speed up the above process if you don't need to explicitly derive a policy at each step is to combine the policy evaluation and picking of the greedy action into one like below:
 \begin{equation}
-v_{*}(s) = \max_{a \in A} \sum_{s'\in S} P^a_{ss'} [R^a_{ss'} + \gamma v_{*}(s') ]
+v (s) = \max_{a \in A} \sum_{s'\in S} P^a_{ss'} [R^a_{ss'} + \gamma v_{*}(s') ]
 \end{equation}
 This is known as Value Iteration. It can be noticed that it does produce final values similar to policy iteration &lt;/p&gt;
 &lt;div id="gw_vi" style="margin-left: auto;margin-right:auto;width:300px"&gt;&lt;/div&gt;
 
 &lt;script&gt;
-pe_gridworld($('#gw_f'),$('#gw_v'),4,4);
-vi_gridworld($('#gw_vi'),4,4);
+pe_gridworld($('#gw_f'),$('#gw_v'),5,5);
+vi_gridworld($('#gw_vi'),5,5);
 &lt;/script&gt;
 
 &lt;h2&gt;Model-Based RL &amp;amp; Model-Free RL&lt;/h2&gt;
@@ -570,7 +654,7 @@ Q(s,a) = Q(s,a) + \alpha [(R_{s'}+\gamma \max_{a^\star} Q(s',a^\star)) -Q(s,a) ]
 \end{equation}&lt;/p&gt;
 &lt;p&gt;The only difference we notice in the $ \max_{a^\star} Q(s',a^\star) $ . Since it's not as simple as taking the Value of the next state since we have one Q value for every action at the state $s'$. To solve this, we pick the action $a^\star$ that leads to the best Q-value for that state.&lt;/p&gt;
 &lt;h2&gt;Deep Reinforcement Learning&lt;/h2&gt;
-&lt;p&gt;While methods above work quite well and actually have proofs that they'll eventually find the optimal policy out of it, it comes at a cost. It's often not feasible to store everything in the form of a table. For a simple, for the game of Go, there are an estimated $10^170$ number of states and at a given time and an estimated 150-250 possible actions to perform. In more real-world problems, it's often not even possible to quantify this. If we're to consider a self-driving car and simply look at the distance travelled as one value of the state, it's a continuous value. Are 1,1.1,1.111,1.11111 all different states? Even if we did have an infinite amount of memory to store all of these at the most granular level, we would still have to run all our algorithms a very large number of times so we've visited every single possible state multiple times so we update it's values even though it's very likely that the state 1,1.1,1.111,1.11111 are very similar to each other.&lt;/p&gt;
+&lt;p&gt;While methods above work quite well and actually have proofs that they'll eventually find the optimal policy out of it, it comes at a cost. It's often not feasible to store everything in the form of a table. For a simple, for the game of Go, there are an estimated $10^{170}$ number of states and at a given time and an estimated 150-250 possible actions to perform. In more real-world problems, it's often not even possible to quantify this. If we're to consider a self-driving car and simply look at the distance traveled as one value of the state, it's a continuous value. Are 1,1.1,1.111,1.11111 all different states? Even if we did have an infinite amount of memory to store all of these at the most granular level, we would still have to run all our algorithms a very large number of times so we've visited every single possible state multiple times so we update it's values even though it's very likely that the state 1,1.1,1.111,1.11111 are very similar to each other.&lt;/p&gt;
 &lt;p&gt;These lead to the use of function approximators where we try to find some sort of simpler way to represent these functions. Using Deep Neural Networks as Function approximators for Reinforcement Learning leads to what's popularly known as Deep Reinforcement Learning. While we're not going to get into it in this post, using a Deep Convolutional Neural Network to represent the Action-Value Function(Q) in the above Q-Learning algorithm along with a few tricks like Experience Replay, Multiple copies of the Q-Network and Reward Clipping to improve its sample efficiency and improve it's stability gets you to Google's Deep Q Network that was very popular and was the State of the Art on Atari just a year ago! To get a quick overview of this, I suggest watching &lt;a href="http://videolectures.net/rldm2015_silver_reinforcement_learning/"&gt;  this &lt;/a&gt;   tutorial which will introduce the concepts I just mentioned.&lt;/p&gt;
 &lt;h2&gt;Why is Reinforcement Learning so hard?&lt;/h2&gt;
 &lt;p&gt;It makes you wonder how we could &lt;em&gt;kinda almost&lt;/em&gt; get to a point where we're capable of building what was considered State of the Art in 2015 after just enough information contained in this tiny blog post. It probably makes you wonder if there's anything to it in the first place. There's actually a lot of challenges that seem very subtle initially but on thinking about it a little more turn out to be the limiting factors of any RL system. A lot of research for past decades and even now is focused on addressing some of these and a lot of them are very interwoven.&lt;/p&gt;
@@ -600,7 +684,7 @@ Prob(a) = \frac{e^{\frac{Q(s,a)}{\tau}}} {e^{\sum_{a' \in A } \frac{Q(s,a')}{\ta
 &lt;h4&gt;Intrinsic Motivation&lt;/h4&gt;
 &lt;p&gt;A hot topic of research right now is to find a way to intrinsically motivate an agent to explore. Extrinsic Motivation is received through the rewarding structure while Intrinsic Motivation is a way to encourage an agent simply driven by curiosity without any explicit reward. This can happen through ways like coming up with a reward for visiting a state we've never seen before.&lt;/p&gt;
 &lt;h3&gt;Hidden States &amp;amp; The Markovian Assumption&lt;/h3&gt;
-&lt;p&gt;Current RL systems are modelled as a Markov Decision Process as we've already discussed. One aspect of this we haven't mentioned yet is the Markovian Property. The Markov Property assumes that the past doesn't matter and that the next state only depends on the current one and not any of the ones in the past. Another way of putting this is that the current state tells you everything you need to know to make a decision and knowing the past won't help. This is a pretty strong assumption but it holds true for a surprising number situations. However, for many real-world situations, this Markov Assumption does not hold true and your current state is very closely related to what you did in the past.&lt;/p&gt;
+&lt;p&gt;Current RL systems are modeled as a Markov Decision Process as we've already discussed. One aspect of this we haven't mentioned yet is the Markovian Property. The Markov Property assumes that the past doesn't matter and that the next state only depends on the current one and not any of the ones in the past. Another way of putting this is that the current state tells you everything you need to know to make a decision and knowing the past won't help. This is a pretty strong assumption but it holds true for a surprising number situations. However, for many real-world situations, this Markov Assumption does not hold true and your current state is very closely related to what you did in the past.&lt;/p&gt;
 &lt;p&gt;Another important assumption made is that the world if fully observable. This means that the current state fully captures all the information we need in order to make a decision. Consider a simple extension of the gridworld but now, the goal spawns at one of the 4 corners of the map randomly and the agent can only sense a small portion around it. &lt;/p&gt;
 &lt;p&gt;&lt;/p&gt;&lt;center&gt;
 &lt;p&gt;&lt;img src="http://ummavi.github.io/img/rl_intro/aliased_1.png" width="200px" style="display:inline;margin-right:5px"&gt;
@@ -608,4 +692,8 @@ Prob(a) = \frac{e^{\frac{Q(s,a)}{\tau}}} {e^{\sum_{a' \in A } \frac{Q(s,a')}{\ta
 &lt;/p&gt;&lt;/center&gt;
 &lt;p&gt;In the picture to the left, the agent can "see" only the 8 neighbouring cells and decides to go down and to the left following some policy in order to go to one of the corners. It then observes that it's hit a corner and the goal isn't here and leaves by trying to move up and towards the right. It's right back where it was before the whole thing started because it can only observe the world partially and cannot see that the goal is towards the other end. It also has no "memory" because of the Markovian Property and cannot reasonably expect to solve problems like this. One way to remedy this would be to explicitly add it memory or some extra information to its state like corners it's already visited but since we're interested in building general purpose AI, this wouldn't be fair.&lt;/p&gt;
 &lt;h3&gt;Defining a Reward Function&lt;/h3&gt;
-&lt;h3&gt;Sparse Rewards&lt;/h3&gt;&lt;/div&gt;</description><category>mathjax</category><guid>http://ummavi.github.io/posts/introduction-to-reinforcement-learning/</guid><pubDate>Wed, 28 Dec 2016 14:02:29 GMT</pubDate></item></channel></rss>
+&lt;p&gt;Defining a reward function is not always a straightforward task. Although we technically consider this a part of the environment, while creating a new task you want to solve through reinforcement learning, we need to define this reward function. In games like Atari or Mario, it's easier since we already have a score and lives that in a way provide feedback about how well the agent is doing. However it's not as straightforward in a lot of real-world tasks.&lt;/p&gt;
+&lt;p&gt;Consider a task like teaching a robotic arm to pick up a glass of water without spilling it. We might think it's straightforward to just give a +1 reward when it performs the task perfectly and nothing else but consider the problem of credit assignment. The arm does hundreds and thousands of trials just flailing about not knowing what to do. Sometimes it touches the glass, sometimes it knocks over the glass. Finally, it picks up the glass but spills a bit of water so we don't give it the +1. The agent has no way of distinguishing this trail from all the other random actions it's done till now although it was pretty close to what we wanted and it will continue to flail about trying random actions trying to figure out what to do.&lt;/p&gt;
+&lt;p&gt;How do we fix this? For starters, we could say maybe we split up this complicated task into two and give it some positive reward for picking up the glass and a bigger one for not spilling water. Now, what about times it's touched the glass but hasn't picked it up? That's definitely closer to the ideal action of picking it up than waving the arm around. Now we could think about rewarding that slightly as well. Now this could go on and on. The more explicit we get in our reward specification and the more we hand engineer these, the more likely we are to solve the task at hand.&lt;/p&gt;
+&lt;p&gt;Then the question becomes, how much is too much? The more explicitly we specify these subgoals, the more we're programming it to behave in a particular way. This also leads to all kinds of other problems like &lt;em&gt;reward hacking&lt;/em&gt; where an agent exploits some loophole in the reward function and finds some optimal behavior that maximizes it's reward that the programmer did not think about. For example, we might specify a small reward of 0.1 for touching the glass and a +1 for completing the task and the robot realizes that it can get more than the total +1.1 by just poking the glass continuously and that it gets a total of +1.2 just touching it 12 times.&lt;/p&gt;
+&lt;p&gt;Another way to look at this problem is through a game like chess. Typically, we have only one reward signal- either a +1 for winning or a -1 for losing. In game that lasts dozens of moves with an extremely large state space, realistically playing enough games to precisely get the credit of the win or the loss on one particular move that you made somewhere in the beginning isn't feasible so instead, rewards are based off some additional features like Piece Mobility and Piece Threats and so on. &lt;/p&gt;&lt;/div&gt;</description><category>mathjax</category><guid>http://ummavi.github.io/posts/introduction-to-reinforcement-learning/</guid><pubDate>Wed, 28 Dec 2016 14:02:29 GMT</pubDate></item></channel></rss>

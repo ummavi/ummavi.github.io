@@ -97,12 +97,12 @@ iter_pe=0;
             }
         }
 
-		vals [0][0] = 0;
+		vals [0][4] = 0;
 
         vals_old = vals;
 		draw_value(obj_v,vals)
 		iter_pe+=1
-		if (iter_pe<100)
+		if (iter_pe<40)
 			pe_id = setTimeout( update_eval_vals, 100 ,obj_v,policy,vals)
 	}
 
@@ -111,7 +111,7 @@ iter_pe=0;
 			window.clearTimeout(pe_id); 
 		}
 		field = init_field(nrows,ncols,"-1");
-		field [0][0] = "G";
+		field [0][ncols-1] = "G";
 		draw_field(obj_f,field);
 
 		//Grab the values entered.
@@ -151,12 +151,12 @@ iter_pe=0;
             }
         }
 
-		vals [0][0] = 0;
+		vals [0][4] = 0;
 
         vals_old = vals;
 		draw_value(obj_v,vals)
 		iter_vi+=1
-		if (iter_vi<100)
+		if (iter_vi<40)
 			vi_id = setTimeout( update_vals, 100 ,obj_v,vals)
 	}
 
