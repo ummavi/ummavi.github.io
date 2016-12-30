@@ -31,7 +31,7 @@ Reinforcement Learning solves a class of problems where an agent needs to learn 
 
 <img src="/img/rl_components.png">
 
-In the typical Mario scenario, Mario's the agent and what we see on screen is the environment. The 4 keys for movement as well as the "a" and "b" keys are actions to the game. Positive rewards can be in the form of an increase in score and a gives a large negative reward for the loss of life or game-over . We could also set a small negative reward for the time taken to encourage our agent to finish the round as quickly as possible.
+In the typical game scenario like Mario, Mario's the agent and what we see on screen is the environment. The 4 keys for movement as well as the "a" and "b" keys are actions to the game as well as "do nothing". The agent interacts with the environment by picking some actions to perform at every time step and this changes his state and gives him some rewards. Positive rewards can be in the form of an increase in score and a large negative reward for the loss of life or a game-over. We could also set a small negative reward for time taken to encourage our agent to finish the round as quickly as possible.
 
 Let's look at the typical components of an RL system in the context of a simple environment often called gridworld.
 
