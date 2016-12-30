@@ -12,6 +12,8 @@
 
 <script src="/js/rl_intro/gridworld.js"> </script>
 
+
+
 ### "When a configuration is reached for which the action is undetermined, a random choice for the missing data is made and the appropriate entry is made in the description, tentatively, and is applied. When a pain stimulus occurs all tentative entries are cancelled, and when a pleasure stimulus occurs they are all made permanent." - Alan Turing (1948)
 
 
@@ -25,9 +27,11 @@ The goal of writing this introductory series of posts is to demonstrate how simp
 
 # The Reinforcement Learning Problem
 
-Reinforcement Learning solves a class of problems where an agent needs to learn to interact with the environment through a number of actions it can perform in order to maximise its total reward and achieve its goal.
+Reinforcement Learning solves a class of problems where an agent needs to learn to interact with the environment through a number of actions it can perform in order to maximize its total reward and achieve its goal.
 
 <img src="/img/rl_components.png">
+
+In the typical Mario scenario, Mario's the agent and what we see on screen is the environment. The 4 keys for movement as well as the "a" and "b" keys are actions to the game. Positive rewards can be in the form of an increase in score and a gives a large negative reward for the loss of life or game-over . We could also set a small negative reward for the time taken to encourage our agent to finish the round as quickly as possible.
 
 Let's look at the typical components of an RL system in the context of a simple environment often called gridworld.
 
@@ -43,7 +47,7 @@ Let's look at the typical components of an RL system in the context of a simple 
 
 <img src="/img/rl_intro/reward.png" width="200px" height ="200px">
 
-* **State-Transition Function($P$)**: A state transition function governs how an agent in one state goes to the next when it performs a particular action. This state transition function is either deterministic where an action always takes you to that same state or is stochastic to model games of chance and situations like "moving North has a 20% chance of taking you south". 
+* **State-Transition Function($P$)**: A state transition function governs how an agent in one state goes to the next when it performs a particular action. This state transition function is either deterministic where an action always takes you to that same state or is stochastic to model games of chance like the probability of drawing a particular card in Poker or a dice roll. This includes situations like "Opening treasure chest has a 20% chance of getting you the key". Abstractly, this would be represented like: **$P$(near_chest,open_treasure,got_key) = 0.2**.
 
 The Reward Function and the State-Transition Function are typically part of the Environment Dynamics and may not be directly accessible by the agent.
 
@@ -245,7 +249,7 @@ As mentioned before, the end goal of this is to derive a policy and there are a 
 
 ## Value Function ($v$)
 
-A value function is a measure of how "good" a state is. Given a state $s$ and you're following a policy $\pi$, it's value $v^{\pi}(s)$ is the expected cumulative reward of being in that state. Mathematically, this is represented as complicated looking but surprisingly simple equation:
+A value function is a measure of how "good" a state is. Given a state $s$ and you're following a policy $\pi$, it's value $v^{\pi}(s)$ is the expected sum of reward of being in that state. Mathematically, this is represented as complicated looking but surprisingly simple equation:
 
 \begin{equation}
 v_{k+1}^{\pi} (s) = \sum_{a \in A} \pi(a|s) (\sum_{s'\in S} P^a_{ss'}(R^a_{ss'} + \gamma v_k(s'))
@@ -258,6 +262,8 @@ The first $\sum_{a \in A} \pi(a|s)$ term is just a way to express what's happeni
 The next $\sum_{s'\in S} P^a_{ss'}$ part represents the second level of our backup diagram where there are multiple states we can end up in after we've picked our action and the State Transition Function (P) gives us a probability value assigned to each of the possible target states.
 
 This is very reminiscent of what we do in Probability using a <a href="http://www.onlinemathlearning.com/tree-diagram.html"> tree diagram </a>. To find the probability of ending up in one of the target states, it's the product of the probability of picking that action and the chances of ending up there. We then use these probabilities to weigh the value function at that state. This is like saying if I have 6 possible states to end up in and a $\frac{1}{6}$ chance of ending up in a state that has a value of +1 and $\frac{5}{6}$ chances of a value 0, then my current value is $\frac{1}{6}$x$1$ + $\frac{5}{6}$x$0$ = $0.16$. Visually, the value function propagates in the reverse direction like the diagram below. 
+
+We can think of it as two "stages". First, we go through the transitions and see what are the possible states we can end up in. This is represented in blue. Second, we take the values and start "backing" them up. The first summation is at the State Transition level $(\sum_{s'\in S} P^a_{ss'}(R^a_{ss'} + \gamma v_k(s'))$ as represented by the region that first becomes red below. We take the value functions of the states we can end up in when we pick that action and sum it up while multiplying it with the probability of ending up in that state. We then take those values and further sum it back while multiplying with the policy in $\sum_{a \in A} \pi(a|s)$ as represented by the second part that becomes red.
 
 <div id="cy2"></div>
 <script>
@@ -331,11 +337,11 @@ var cy2 = cytoscape({
     }),
   elements: {
       nodes: [
-        { data: { id: 's', size: '24px',level:1 } },
-        { data: { id: 'N', size: '12px' ,level:2} },
-        { data: { id: 'S', size: '12px' ,level:2} },
-        { data: { id: 'E', size: '12px' ,level:2} },
-        { data: { id: 'W', size: '12px' ,level:2} },
+        { data: { id: 's', size: '24px',level:2 } },
+        { data: { id: 'N', size: '12px' ,level:3} },
+        { data: { id: 'S', size: '12px' ,level:3} },
+        { data: { id: 'E', size: '12px' ,level:3} },
+        { data: { id: 'W', size: '12px' ,level:3} },
 
         { data: { id: 's11', size: '24px', level:3 } },
         { data: { id: 's12', size: '24px', level:3 } },
@@ -381,9 +387,8 @@ var cy2 = cytoscape({
   
 
 var valiter = cy2.elements().bfs('#s', function(){}, true);
+var val_level = 0;
 
-
-var val_level = 4;
 var val_highlightNextEle = function(){
     for (var i = 0; i <  valiter.path.length; i++) 
         if (valiter.path[i].data().level==val_level){
@@ -393,13 +398,24 @@ var val_highlightNextEle = function(){
 
     if (val_level==0){
         for (var i = 0; i <  valiter.path.length; i++){
+            valiter.path[i].removeClass('highlighted');
             valiter.path[i].removeClass('highlighted_back');
             valiter.path[i].css('line-color','#ddd');
             valiter.path[i].css('background-color','#000');
             valiter.path[i].css('target-arrow-color','#ddd');
         }
-        val_level=4;
     }
+
+    if (val_level==-1){
+      for (var i = 0; i <  valiter.path.length; i++){
+            valiter.path[i].removeClass('highlighted_back');
+            valiter.path[i].addClass('highlighted');
+        }
+      val_level=5;
+
+    }
+
+
     val_level+=-1;
 
 };
@@ -409,7 +425,7 @@ var val_highlightNextEle = function(){
 }); 
 </script>
 
-To see how this actually works in action, let's describe a game that was partially introduced already - gridworld. As the name suggests, it's simply a 2D **n**x**n** grid where the agent occupies one position of the grid. At each point, there are 4 possible actions- North, South, East or West. The agent starts off in one of these grids and needs to reach the goal state for which it receives a +1 reward.In our gridworld, we know exactly where we'll end up if we try going North so $P^a_{ss'}$=1 for that $s'$ and 0 for everything else. We can simplify the equation to reflect this by
+To see how this actually works in action, let's describe a game that was partially introduced already - gridworld. As the name suggests, it's simply a 2D **n**x**n** grid where the agent occupies one position of the grid. At each point, there are 4 possible actions- North, South, East or West. The agent starts off in one of these cells and needs to reach the goal state for which it receives a +1 reward.In our gridworld, we know exactly where we'll end up if we try going North so $P^a_{ss'}$=1 for that $s'$ and 0 for everything else. We can simplify the equation to reflect this by
 \begin{equation}
 v_{k+1}(s) = \sum_{a \in A} \pi(a|s) (R^a_{ss'} + \gamma v_k(s') 
 \end{equation}
@@ -417,7 +433,7 @@ v_{k+1}(s) = \sum_{a \in A} \pi(a|s) (R^a_{ss'} + \gamma v_k(s')
 Lastly, the $\gamma$ term is what's called a discount factor. It's a mechanism to weigh the importance of immediate rewards vs rewards far off in the future. A value close to 1 would imply we care about the long-term expected reward while a value closer to 0 means we care more about immediate rewards.
 
 # Policy Evaluation
-Policy Evaluation is a way to evaluate an already known policy and see how well you'd perform following it. It's a direct application of the above value function equation. This is a very simplistic example to show how values propagate over time and slowly converge towards their true values. 
+Policy Evaluation is a way to evaluate an already known policy and see how well you'd perform following it. It's a direct application of the above value function equation. This is a simplistic example to show how values propagate over time and slowly converge towards their true values in gridworld.  
 
 <div style="width:700px;margin-left: auto;margin-right: auto;">
 
@@ -426,24 +442,53 @@ Policy Evaluation is a way to evaluate an already known policy and see how well 
     <div>
     <table cellpadding=0 cellspacing=0 style="table-layout:fixed;width:185px;margin-left: auto;margin-right: auto">
     <tr> <td colspan="3" style="text-align:center">Policy </td></tr>
-    <tr> <td> </td> <td style="text-align:center"> <input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),4,4)' size=6 type="text" id="pe_up" value="0.25"> </td> <td> </td> </tr> 
-    <tr> <td style="text-align:center"> <input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),4,4)' size=6 type="text" id="pe_left" value="0.25"> </td> <td> </td> <td style="text-align:center"> <input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),4,4)' size=6 type="text" id="pe_right" value="0.25"> </td></tr>
-    <tr> <td> </td> <td style="text-align:center"> <input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),4,4)' size=6 type="text" id="pe_down" value="0.25"> </td><td> </td> </tr> 
+    <tr> <td> </td> <td style="text-align:center"> <input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),5,5)' size=6 type="text" id="pe_up" value="0.25"> </td> <td> </td> </tr> 
+    <tr> <td style="text-align:center"> <input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),5,5)' size=6 type="text" id="pe_left" value="0.25"> </td> <td> </td> <td style="text-align:center"> <input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),5,5)' size=6 type="text" id="pe_right" value="0.25"> </td></tr>
+    <tr> <td> </td> <td style="text-align:center"> <input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),5,5)' size=6 type="text" id="pe_down" value="0.25"> </td><td> </td> </tr> 
     </table>
 
 
-    <span class="bton" style="margin-bottom:0px" onclick="$('#pe_up').val('0.25');$('#pe_down').val('0.25');$('#pe_left').val('0.25');$('#pe_right').val('0.25');pe_gridworld($('#gw_f'),$('#gw_v'),4,4)">Uniform Random</span>
-    <span class="bton" style="margin-bottom:0px" onclick="$('#pe_up').val('1');$('#pe_down').val('0');$('#pe_left').val('0');$('#pe_right').val('0');pe_gridworld($('#gw_f'),$('#gw_v'),4,4)">Always Up</span>
-    <span class="bton" style="margin-bottom:0px" onclick="$('#pe_up').val('0');$('#pe_down').val('0');$('#pe_left').val('0');$('#pe_right').val('1');pe_gridworld($('#gw_f'),$('#gw_v'),4,4)">Always Right</span>
+    <span class="bton" style="margin-bottom:0px" onclick="$('#pe_up').val('0.25');$('#pe_down').val('0.25');$('#pe_left').val('0.25');$('#pe_right').val('0.25');pe_gridworld($('#gw_f'),$('#gw_v'),5,5)">Uniform Random</span>
+    <span class="bton" style="margin-bottom:0px" onclick="$('#pe_up').val('1');$('#pe_down').val('0');$('#pe_left').val('0');$('#pe_right').val('0');pe_gridworld($('#gw_f'),$('#gw_v'),5,5)">Always Up</span>
+    <span class="bton" style="margin-bottom:0px" onclick="$('#pe_up').val('0');$('#pe_down').val('0');$('#pe_left').val('0');$('#pe_right').val('1');pe_gridworld($('#gw_f'),$('#gw_v'),5,5)">Always Right</span>
     </div>
 </div>
-<span style="font-size:10px">The Uniform Random Policy is the default value and shows you the value of every state if you randomly pick one of your 4 options every time with equal probability. Note: You can edit these values at will. They are normalized to a [0,1] range and taken as probabilities. The computation will only run for 100 iterations. </span> 
+<span style="font-size:10px">The Uniform Random Policy is the default value and shows you the value of every state if you randomly pick one of your 4 options every time with equal probability. Note: You can edit these values at will. They are normalized to a [0,1] range and taken as probabilities. The computation will only run for 40 iterations. </span> 
 
+A code snippet to see how Policy Evaluation can be implemented in python below:
+
+<span class="bton" style="margin-bottom:0px" onclick="$('#pol_eval_code').toggle(0.5);">Show/Hide Code</span>
+<div id = "pol_eval_code">
+
+```python
+def evaluate_policy(policy):
+    '''
+    Policy evaluation implementation. 
+    Checks for tolerance by looking at the maximum difference between values from one iteration to the next.
+    '''
+    V = np.zeros(MAP.shape,dtype=np.float32) #Initialize the Values to zero with the size of the map
+    maxdiff = tol+1 
+    while maxdiff>tol:
+        maxdiff=0.
+        for src in states:
+            (y,x) = src
+            if not is_valid_location(src): continue #Don't evaluate for blocked squares
+            v = 0 
+            for a in get_valid_actions(src): #Iterate through all possible actions from current state
+                for target in [(y,x+1),(y,x-1),(y-1,x),(y+1,x)]: #Iterate through all possible end states
+                    if is_valid_location(target): 
+                        v+= policy[src][a]*P(target,a,src)*(R(target,a,src)+gamma*V[target[0],target[1]])
+            maxdiff = max(maxdiff,abs(V[y,x]-v))
+            V[y,x] = v #Set V to the updated value.
+    return V
+```
+</div>
 
 # Policy Iteration
 Now that you've evaluated your policy, what can you do with it? Since our end goal is to find the best policy, we can make use of this evaluated policy to generate a new policy out of it. We can do this by simply looking at the value function above and at each state, picking the action that will take you to the neighbour with the best value. This is often called acting "greedily" with respect to the policy that you evaluated.  
 
 To improve our policy further, we can go for another round of process described above. We can evaluate the greedy policy that we generated and again generate a new (and better) one. This process is known as Policy Iteration. It's shown that this process will eventually converge to the optimal policy $\pi^*$. 
+
 
 <figure>
 <img src="/img/rl_intro/policy_iter.png">
@@ -451,19 +496,63 @@ To improve our policy further, we can go for another round of process described 
 </figure>
 
 
+<span class="bton" style="margin-bottom:0px" onclick="$('#pol_iter_code').toggle(0.5);">Show/Hide Code</span>
+<div id="pol_iter_code">
+```python
+def derive_greedy_policy(V):
+    '''
+    Derive a greedy policy from the Value Function V
+    '''
+    Pol = {}
+    for src in states:
+        (y,x) = src
+        maxval,maxaction = -999999,"west"
+        #Evaluate all the actions and find the one with the maximum value.
+        for a in get_valid_actions(src): 
+            for target in [(y,x+1),(y,x-1),(y-1,x),(y+1,x)]:
+                if is_valid_location(target):
+                    cval = P(target,a,src)*(R(target,a,src)+gamma*V[target[0],target[1]])
+                    if cval>maxval: maxval,maxaction = (cval,a) 
+
+        #Select the action greedily
+        Pol[(y,x)]={'east':0.,'west':0.,'north':0.,'south':0.}
+        Pol[(y,x)][maxaction] = 1.
+    return Pol
+
+def policy_iteration(Pol):
+    '''
+    Drive the Policy Iteration by calling evaluation and improvement till convergence 
+    '''
+    while True:
+
+        V= evaluate_policy(Pol)
+
+        Pol_new = derive_policy(V)
+
+        if Pol_new == Pol:
+            print("Policy Iteration converged after",i,"steps")
+            break
+
+        Pol = Pol_new
+
+    return V
+```
+
+</div>
 
 # Value Iteration
 One way to speed up the above process if you don't need to explicitly derive a policy at each step is to combine the policy evaluation and picking of the greedy action into one like below:
 \begin{equation}
-v_{\*}(s) = \max_{a \in A} \sum_{s'\in S} P^a_{ss'} [R^a_{ss'} + \gamma v_{\*}(s') ]
+v (s) = \max_{a \in A} \sum_{s'\in S} P^a_{ss'} [R^a_{ss'} + \gamma v_{\*}(s') ]
 \end{equation}
 This is known as Value Iteration. It can be noticed that it does produce final values similar to policy iteration 
 
 <div id="gw_vi" style="margin-left: auto;margin-right:auto;width:300px"></div>
 <script>
-pe_gridworld($('#gw_f'),$('#gw_v'),4,4);
-vi_gridworld($('#gw_vi'),4,4);
+pe_gridworld($('#gw_f'),$('#gw_v'),5,5);
+vi_gridworld($('#gw_vi'),5,5);
 </script>
+
 
 # Model-Based RL &amp; Model-Free RL
 
@@ -636,7 +725,7 @@ The only difference we notice in the $ \max_{a^\star} Q(s',a^\star) $ . Since it
 
 # Deep Reinforcement Learning
 
-While methods above work quite well and actually have proofs that they'll eventually find the optimal policy out of it, it comes at a cost. It's often not feasible to store everything in the form of a table. For a simple, for the game of Go, there are an estimated $10^170$ number of states and at a given time and an estimated 150-250 possible actions to perform. In more real-world problems, it's often not even possible to quantify this. If we're to consider a self-driving car and simply look at the distance travelled as one value of the state, it's a continuous value. Are 1,1.1,1.111,1.11111 all different states? Even if we did have an infinite amount of memory to store all of these at the most granular level, we would still have to run all our algorithms a very large number of times so we've visited every single possible state multiple times so we update it's values even though it's very likely that the state 1,1.1,1.111,1.11111 are very similar to each other.
+While methods above work quite well and actually have proofs that they'll eventually find the optimal policy out of it, it comes at a cost. It's often not feasible to store everything in the form of a table. For a simple, for the game of Go, there are an estimated $10^{170}$ number of states and at a given time and an estimated 150-250 possible actions to perform. In more real-world problems, it's often not even possible to quantify this. If we're to consider a self-driving car and simply look at the distance traveled as one value of the state, it's a continuous value. Are 1,1.1,1.111,1.11111 all different states? Even if we did have an infinite amount of memory to store all of these at the most granular level, we would still have to run all our algorithms a very large number of times so we've visited every single possible state multiple times so we update it's values even though it's very likely that the state 1,1.1,1.111,1.11111 are very similar to each other.
 
 
 
@@ -725,7 +814,7 @@ A hot topic of research right now is to find a way to intrinsically motivate an 
 
 ## Hidden States &amp; The Markovian Assumption
 
-Current RL systems are modelled as a Markov Decision Process as we've already discussed. One aspect of this we haven't mentioned yet is the Markovian Property. The Markov Property assumes that the past doesn't matter and that the next state only depends on the current one and not any of the ones in the past. Another way of putting this is that the current state tells you everything you need to know to make a decision and knowing the past won't help. This is a pretty strong assumption but it holds true for a surprising number situations. However, for many real-world situations, this Markov Assumption does not hold true and your current state is very closely related to what you did in the past.
+Current RL systems are modeled as a Markov Decision Process as we've already discussed. One aspect of this we haven't mentioned yet is the Markovian Property. The Markov Property assumes that the past doesn't matter and that the next state only depends on the current one and not any of the ones in the past. Another way of putting this is that the current state tells you everything you need to know to make a decision and knowing the past won't help. This is a pretty strong assumption but it holds true for a surprising number situations. However, for many real-world situations, this Markov Assumption does not hold true and your current state is very closely related to what you did in the past.
 
 Another important assumption made is that the world if fully observable. This means that the current state fully captures all the information we need in order to make a decision. Consider a simple extension of the gridworld but now, the goal spawns at one of the 4 corners of the map randomly and the agent can only sense a small portion around it. 
 
@@ -739,5 +828,13 @@ Another important assumption made is that the world if fully observable. This me
 In the picture to the left, the agent can "see" only the 8 neighbouring cells and decides to go down and to the left following some policy in order to go to one of the corners. It then observes that it's hit a corner and the goal isn't here and leaves by trying to move up and towards the right. It's right back where it was before the whole thing started because it can only observe the world partially and cannot see that the goal is towards the other end. It also has no "memory" because of the Markovian Property and cannot reasonably expect to solve problems like this. One way to remedy this would be to explicitly add it memory or some extra information to its state like corners it's already visited but since we're interested in building general purpose AI, this wouldn't be fair.
 
 ## Defining a Reward Function
+Defining a reward function is not always a straightforward task. Although we technically consider this a part of the environment, while creating a new task you want to solve through reinforcement learning, we need to define this reward function. In games like Atari or Mario, it's easier since we already have a score and lives that in a way provide feedback about how well the agent is doing. However it's not as straightforward in a lot of real-world tasks.
 
-## Sparse Rewards 
+Consider a task like teaching a robotic arm to pick up a glass of water without spilling it. We might think it's straightforward to just give a +1 reward when it performs the task perfectly and nothing else but consider the problem of credit assignment. The arm does hundreds and thousands of trials just flailing about not knowing what to do. Sometimes it touches the glass, sometimes it knocks over the glass. Finally, it picks up the glass but spills a bit of water so we don't give it the +1. The agent has no way of distinguishing this trail from all the other random actions it's done till now although it was pretty close to what we wanted and it will continue to flail about trying random actions trying to figure out what to do.
+
+How do we fix this? For starters, we could say maybe we split up this complicated task into two and give it some positive reward for picking up the glass and a bigger one for not spilling water. Now, what about times it's touched the glass but hasn't picked it up? That's definitely closer to the ideal action of picking it up than waving the arm around. Now we could think about rewarding that slightly as well. Now this could go on and on. The more explicit we get in our reward specification and the more we hand engineer these, the more likely we are to solve the task at hand.
+
+Then the question becomes, how much is too much? The more explicitly we specify these subgoals, the more we're programming it to behave in a particular way. This also leads to all kinds of other problems like *reward hacking* where an agent exploits some loophole in the reward function and finds some optimal behavior that maximizes it's reward that the programmer did not think about. For example, we might specify a small reward of 0.1 for touching the glass and a +1 for completing the task and the robot realizes that it can get more than the total +1.1 by just poking the glass continuously and that it gets a total of +1.2 just touching it 12 times.
+
+Another way to look at this problem is through a game like chess. Typically, we have only one reward signal- either a +1 for winning or a -1 for losing. In game that lasts dozens of moves with an extremely large state space, realistically playing enough games to precisely get the credit of the win or the loss on one particular move that you made somewhere in the beginning isn't feasible so instead, rewards are based off some additional features like Piece Mobility and Piece Threats and so on. 
+
