@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>About Machines That Learn &amp; Think (mathjax)</title><link>http://ummavi.github.io/</link><description></description><atom:link type="application/rss+xml" href="http://ummavi.github.io/categories/mathjax.xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 01 Jan 2017 11:56:11 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Introduction to Reinforcement Learning</title><link>http://ummavi.github.io/posts/introduction-to-reinforcement-learning/</link><dc:creator>Avinash Ummadisingu</dc:creator><description>&lt;div&gt;&lt;script&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>About Machines That Learn &amp; Think (mathjax)</title><link>http://ummavi.github.io/</link><description></description><atom:link type="application/rss+xml" href="http://ummavi.github.io/categories/mathjax.xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 01 Jan 2017 12:03:21 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Introduction to Reinforcement Learning</title><link>http://ummavi.github.io/posts/introduction-to-reinforcement-learning/</link><dc:creator>Avinash Ummadisingu</dc:creator><description>&lt;div&gt;&lt;script&gt;
 var gridworld,vals,vals_old,pe_id;
 pe_id = -1;
 var vi_id = -1;
@@ -204,7 +204,7 @@ iter_pe=0;
 &lt;li&gt;&lt;strong&gt;Policy ($\pi$)&lt;/strong&gt;: The aim of an RL algorithm is to find a Policy that tells the agent how to act given a state. An agent keeps trying to find a better policy that allows it to get more reward in the long-term. It does this by looking at which one of its actions are more likely to produce high reward and prefers those over lower ones.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;With these values defined, we can visualize one time-step as a tree of possible agent interactions with the environment. This will help us understand something called backup diagrams we'll look at later and makes it easier to see how all of these values come together.&lt;/p&gt;
-&lt;script src="http://ummavi.github.io/js/cytoscape.js"&gt; &lt;/script&gt;
+&lt;script src="http://ummavi.github.io/js/cytoscape.min.js"&gt; &lt;/script&gt;
 
 &lt;div id="cy"&gt;&lt;/div&gt;
 

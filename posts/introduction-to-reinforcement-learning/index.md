@@ -229,7 +229,7 @@ The Reward Function and the State-Transition Function are typically part of the 
 With these values defined, we can visualize one time-step as a tree of possible agent interactions with the environment. This will help us understand something called backup diagrams we'll look at later and makes it easier to see how all of these values come together.
 
 
-<script src="/js/cytoscape.js"> </script>
+<script src="/js/cytoscape.min.js"> </script>
 <div id="cy"></div>
 <style type="text/css">
 #cy {
