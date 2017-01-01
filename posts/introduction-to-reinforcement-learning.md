@@ -12,7 +12,6 @@
 
 <script>
 var gridworld,vals,vals_old,pe_id;
-console.log("What")
 pe_id = -1;
 var vi_id = -1;
 // init = rgb(0,4,40);
@@ -25,7 +24,7 @@ init_r = 0;
 init_g = 4;
 init_b = 40;
 
-min_val = -60;
+min_val = -1;
 max_val = 0;
 
 iter_pe=0;
@@ -191,7 +190,7 @@ iter_pe=0;
 ### "When a configuration is reached for which the action is undetermined, a random choice for the missing data is made and the appropriate entry is made in the description, tentatively, and is applied. When a pain stimulus occurs all tentative entries are cancelled, and when a pleasure stimulus occurs they are all made permanent." - Alan Turing (1948)
 
 
-Reinforcement Learning deals with problems where an agent needs to learn to interact with its environment through a number of actions and try to maximise the total reward it gets over time. The crux of it lies in the fact that the agent is not taught what actions to take when but has to discover this on its own through its repeated interactions with the environment. This feels natural to us since it's an integral part of how humans or animals learn and much of the techniques developed are inspired by Psychology and Neuroscience. 
+Reinforcement Learning deals with problems where an agent needs to learn to interact with its environment through a number of actions and try to maximise the total reward it gets over time. The core of it lies in the fact that the agent is not taught what actions to take when but has to discover this on its own through its repeated interactions with the environment. This feels natural to us since it's an integral part of how humans or animals learn and much of the techniques developed are inspired by Psychology and Neuroscience. 
 
 RL is **huge** right now. It's changing the world around us with Self-Driving Cars,[beating professional gamers at retro games](http://www.nature.com/nature/journal/v518/n7540/full/nature14236.html), [Doom!](https://www.cmu.edu/news/stories/archives/2016/september/AI-agent-survives-doom.html), beating world champions at games considered impossible for computers to solve just years ago ([Go](https://deepmind.com/research/alphago/), [Backgammon](https://en.wikipedia.org/wiki/TD-Gammon), [Chess](http://spawk.fish/)) , Quantitative Finance,[Making Data Centers more Energy Efficient](https://deepmind.com/blog/deepmind-ai-reduces-google-data-centre-cooling-bill-40/), [Robotics](https://www.youtube.com/watch?v=QxQKI1O2ep0) and so much more.
 
@@ -217,11 +216,11 @@ Let's look at the typical components of an RL system in the context of a simple 
 
 <img src="/img/rl_intro/action.png" width="200px" height ="200px">
 
-* **Reward Function ($R$) and Reward Signal ($r$)**: At every time-step, the agent receives a reward signal(r) from the environment. This reward signal is some number the agent receives as it's reinforcement- either positive or negative to decide whether something it's doing is good or bad. In our little maze, we get a reward of +1 for moving from some state to the goal state (in green) and a 0 for everything else. This +1 reward, therefore, needs to incentivize the agent to get to that goal state somehow since that's the only way to get the reward. Mathematically, the reward function $R_a(s,s')$ generates a reward signal $r$ when the agent moves from state $s$ to $s'$ while performing the action $a$
+* **Reward Function ($R^a_{ss'}$) and Reward Signal ($r$)**: At every time-step, the agent receives a reward signal ($r$) from the environment. This reward signal is some number the agent receives as it's reinforcement- either positive or negative, to decide whether something it's doing is good or bad. In our little maze, we get a reward of +1 for moving from some state to the goal state (in green) and a 0 for everything else. This +1 reward, therefore, needs to incentivise the agent to get to that goal state somehow since that's the only way to get the reward. Mathematically, the reward function $R^a_{ss'}$ generates a reward signal $r$ when the agent moves from state $s$ to $s'$ while performing the action $a$
 
 <img src="/img/rl_intro/reward.png" width="200px" height ="200px">
 
-* **State-Transition Function($P$)**: A state transition function governs how an agent in one state goes to the next when it performs a particular action. This state transition function is either deterministic where an action always takes you to that same state or is stochastic to model games of chance like the probability of drawing a particular card in Poker or a dice roll. This includes situations like "Opening treasure chest has a 20% chance of getting you the key". Abstractly, this would be represented like: **$P$(near_chest,open_treasure,got_key) = 0.2**.
+* **State-Transition Function($P^a_{ss'}$)**: A state transition function governs how an agent in one state goes to the next when it performs a particular action. This state transition function is either deterministic where an action always takes you to that same state or is stochastic to model games of chance like the probability of drawing a particular card in Poker or a dice roll. This includes situations like "Opening treasure chest has a 20% chance of getting you the key". Abstractly, this would be represented like: **$P$(near_chest,open_treasure,got_key) = 0.2**.
 
 The Reward Function and the State-Transition Function are typically part of the Environment Dynamics and may not be directly accessible by the agent.
 
@@ -426,10 +425,16 @@ As mentioned before, the end goal of this is to derive a policy and there are a 
 A value function is a measure of how "good" a state is. Given a state $s$ and you're following a policy $\pi$, it's value $v^{\pi}(s)$ is the expected sum of reward of being in that state. Mathematically, this is represented as complicated looking but surprisingly simple equation:
 
 \begin{equation}
-v_{k+1}^{\pi} (s) = \sum_{a \in A} \pi(a|s) (\sum_{s'\in S} P^a_{ss'}(R^a_{ss'} + \gamma v_k(s'))
+v^{\pi} (s) = \sum_{a \in A} \pi(a|s) (\sum_{s'\in S} P^a_{ss'}(R^a_{ss'} + \gamma v^{\pi}(s'))
 \end{equation}
 
-While that equation looks intimidating, it's actually rather easy to understand if we go back to the visualization and break it down into the pieces. 
+While that equation looks intimidating, it's actually rather easy to understand if we go back to the visualization and break it down into the pieces. But before that, a quick aside about *Expected Value* will help us better understand what's going on. Suppose a random variable X can take value $x_1$ with probability $p_1$, value $x_2$ with probability $p_2$, and so on, up to value $x_k$ with probability $p_k$. Then the expectation of this random variable X is defined as
+
+\begin{equation}
+ \operatorname{E}[X] = \sum_{i=1}^\infty x_i\, p_i 
+\end{equation}
+
+Simply put, consider a game where I win \$2 whenever I roll a 6 with a dice and lose \$0.5 for every other number, my *Expected Value* or the value of money I expect to win/lose if I keep playing for a long,long time is simply the sum of values multiplied by the probability it occurs. For this example, it would be $2$x$\frac{1}{6}+(-0.5$x$\frac{5}{6})=-0.833$ so it probably doesn't make sense to play the game. 
 
 The first $\sum_{a \in A} \pi(a|s)$ term is just a way to express what's happening at the first node in our backup diagram. We have multiple actions we can perform and the probability of picking an action given the current state is given by the policy($\pi$) we're currently following. 
 
@@ -437,7 +442,7 @@ The next $\sum_{s'\in S} P^a_{ss'}$ part represents the second level of our back
 
 This is very reminiscent of what we do in Probability using a <a href="http://www.onlinemathlearning.com/tree-diagram.html"> tree diagram </a>. To find the probability of ending up in one of the target states, it's the product of the probability of picking that action and the chances of ending up there. We then use these probabilities to weigh the value function at that state. This is like saying if I have 6 possible states to end up in and a $\frac{1}{6}$ chance of ending up in a state that has a value of +1 and $\frac{5}{6}$ chances of a value 0, then my current value is $\frac{1}{6}$x$1$ + $\frac{5}{6}$x$0$ = $0.16$. Visually, the value function propagates in the reverse direction like the diagram below. 
 
-We can think of it as two "stages". First, we go through the transitions and see what are the possible states we can end up in. This is represented in blue. Second, we take the values and start "backing" them up. The first summation is at the State Transition level $(\sum_{s'\in S} P^a_{ss'}(R^a_{ss'} + \gamma v_k(s'))$ as represented by the region that first becomes red below. We take the value functions of the states we can end up in when we pick that action and sum it up while multiplying it with the probability of ending up in that state. We then take those values and further sum it back while multiplying with the policy in $\sum_{a \in A} \pi(a|s)$ as represented by the second part that becomes red.
+We can think of it as two "stages". First, we go through the transitions and see what are the possible states we can end up in. This is represented in blue. Second, we take the values and start "backing" them up. The first summation is at the State Transition level $(\sum_{s'\in S} P^a_{ss'}(R^a_{ss'} + \gamma v(s'))$ as represented by the region that first becomes red below. We take the value functions of the states we can end up in when we pick that action and sum it up while multiplying it with the probability of ending up in that state. We then take those values and further sum it back while multiplying with the policy in $\sum_{a \in A} \pi(a|s)$ as represented by the second part that becomes red.
 
 <div id="cy2"></div>
 <script>
@@ -600,8 +605,9 @@ var val_highlightNextEle = function(){
 </script>
 
 To see how this actually works in action, let's describe a game that was partially introduced already - gridworld. As the name suggests, it's simply a 2D **n**x**n** grid where the agent occupies one position of the grid. At each point, there are 4 possible actions- North, South, East or West. The agent starts off in one of these cells and needs to reach the goal state for which it receives a +1 reward.In our gridworld, we know exactly where we'll end up if we try going North so $P^a_{ss'}$=1 for that $s'$ and 0 for everything else. We can simplify the equation to reflect this by
+
 \begin{equation}
-v_{k+1}(s) = \sum_{a \in A} \pi(a|s) (R^a_{ss'} + \gamma v_k(s') 
+v^{\pi} (s) = \sum_{a \in A} \pi(a|s) (R^a_{ss'} + \gamma v^{\pi}(s'))
 \end{equation}
 
 Lastly, the $\gamma$ term is what's called a discount factor. It's a mechanism to weigh the importance of immediate rewards vs rewards far off in the future. A value close to 1 would imply we care about the long-term expected reward while a value closer to 0 means we care more about immediate rewards.
@@ -629,7 +635,7 @@ Policy Evaluation is a way to evaluate an already known policy and see how well 
 </div>
 <span style="font-size:10px">The Uniform Random Policy is the default value and shows you the value of every state if you randomly pick one of your 4 options every time with equal probability. Note: You can edit these values at will. They are normalized to a [0,1] range and taken as probabilities. The computation will only run for 40 iterations. </span> 
 
-A code snippet to see how Policy Evaluation can be implemented in python below:
+A code snippet to see how Policy Evaluation can be implemented in Python is given below:
 
 <span class="bton" style="margin-bottom:0px" onclick="$('#pol_eval_code').toggle(0.5);">Show/Hide Code</span>
 <div id = "pol_eval_code">
@@ -659,7 +665,7 @@ def evaluate_policy(policy):
 </div>
 
 # Policy Iteration
-Now that you've evaluated your policy, what can you do with it? Since our end goal is to find the best policy, we can make use of this evaluated policy to generate a new policy out of it. We can do this by simply looking at the value function above and at each state, picking the action that will take you to the neighbour with the best value. This is often called acting "greedily" with respect to the policy that you evaluated.  
+Now that we've evaluated our policy, what can we do with it? Since our end goal is to find the best policy, we can make use of this evaluated policy to generate a new policy out of it. We can do this by simply looking at the value function above and at each state, picking the action that will take us to the neighbor with the best value. This is often called acting "greedily" with respect to the policy that we evaluated.  
 
 To improve our policy further, we can go for another round of process described above. We can evaluate the greedy policy that we generated and again generate a new (and better) one. This process is known as Policy Iteration. It's shown that this process will eventually converge to the optimal policy $\pi^*$. 
 
@@ -669,6 +675,8 @@ To improve our policy further, we can go for another round of process described 
 <figcaption>Policy Iteration. Image Credits: Sutton &amp; Barto</figcaption>
 </figure>
 
+
+A code snippet to see how Policy Iteration can be implemented in Python is given below:
 
 <span class="bton" style="margin-bottom:0px" onclick="$('#pol_iter_code').toggle(0.5);">Show/Hide Code</span>
 <div id="pol_iter_code">
@@ -680,7 +688,8 @@ def derive_greedy_policy(V):
     Pol = {}
     for src in states:
         (y,x) = src
-        maxval,maxaction = -999999,"west"
+        maxval = -99 #Initialize with some min value.
+
         #Evaluate all the actions and find the one with the maximum value.
         for a in get_valid_actions(src): 
             for target in [(y,x+1),(y,x-1),(y-1,x),(y+1,x)]:
@@ -691,6 +700,7 @@ def derive_greedy_policy(V):
         #Select the action greedily
         Pol[(y,x)]={'east':0.,'west':0.,'north':0.,'south':0.}
         Pol[(y,x)][maxaction] = 1.
+
     return Pol
 
 def policy_iteration(Pol):
@@ -699,7 +709,7 @@ def policy_iteration(Pol):
     '''
     while True:
 
-        V= evaluate_policy(Pol)
+        V = evaluate_policy(Pol)
 
         Pol_new = derive_policy(V)
 
@@ -715,7 +725,7 @@ def policy_iteration(Pol):
 </div>
 
 # Value Iteration
-One way to speed up the above process if you don't need to explicitly derive a policy at each step is to combine the policy evaluation and picking of the greedy action into one like below:
+One way to speed up the above process if we don't need to explicitly derive a policy at each step is to combine the policy evaluation and picking of the greedy action into one like below:
 \begin{equation}
 v (s) = \max_{a \in A} \sum_{s'\in S} P^a_{ss'} [R^a_{ss'} + \gamma v_{\*}(s') ]
 \end{equation}
@@ -745,10 +755,10 @@ One of the most popular ways to do Model Free RL is through a family of methods 
 First, let's look at the central idea behind TD learning using one the simplest methods- TD(0).
 
 \begin{equation}
-V(s) = V(s) + \alpha [(R_{s'}+\gamma V(s')) -V(s) ]
+v(s) = v(s) + \alpha [(R_{s'}+\gamma v(s')) - v(s) ]
 \end{equation}
 
-Just like before, the equation starts to make a lot of sense when you start to visualize it. In this case, we do what's called *sample backups* rather than a *full backup* because we look at just one target state rather than all the possible target states.
+Just like before, the equation starts to make a lot of sense when we start to visualize it. In this case, we do what's called *sample backups* rather than a *full backup* because we look at just one target state rather than all the possible target states.
 
 <div id="cy3"></div>
 <script>
@@ -870,7 +880,7 @@ var td0_highlightNextEle = function(){
 }); 
 </script>
 
-The core idea behind TD(0) is to make a prediction of what we think the value of that state is (denoted by the last term V(S) in the bracket) and a better estimate we get from our interaction with the environment (given by the term in the bracket $(R_{s'}+\gamma V(s'))$) and the difference between the two is called the TD error. TD error captures the change of prediction over time hence the name Temporal Difference Learning.   
+The core idea behind TD(0) is to make a prediction of what we think the value of that state is (denoted by the last term v(S) in the bracket) and a better estimate we get from our interaction with the environment (given by the term in the bracket $(R_{s'}+\gamma v(s'))$) and the difference between the two is called the TD error. TD error captures the change of prediction over time hence the name Temporal Difference Learning.   
 
 
 
@@ -893,13 +903,47 @@ Q(s,a) = Q(s,a) + \alpha [(R_{s'}+\gamma \max_{a^\star} Q(s',a^\star)) -Q(s,a) ]
 
 The only difference we notice in the $ \max_{a^\star} Q(s',a^\star) $ . Since it's not as simple as taking the Value of the next state since we have one Q value for every action at the state $s'$. To solve this, we pick the action $a^\star$ that leads to the best Q-value for that state.
 
+A code snippet to see how Q-Learning can be implemented in Python is given below:
 
+<span class="bton" style="margin-bottom:0px" onclick="$('#q_learning_code').toggle(0.5);">Show/Hide Code</span>
+<div id = "q_learning_code">
 
+```Python
+def choose_action(state,eps=0.1):
+    '''
+    Choose an action using epsilon-greedy. 
+    Perform a random action with probability of eps or pick the best action otherwise
+    '''
+    if np.random.uniform()>=eps:
+        return np.argmax(Q[state[0],state[1],:])
+    else:
+        return np.random.choice(actions)
 
+def q_step(s):
+    '''
+    Perform one step of the Q Learning. 
+    '''
+    global Q
+
+    #Choose an action epsilon greedily
+    a = choose_action(s)
+    
+    #Perform the action and get the next state and reward
+    s_new,r = perform_action(a)
+    
+    #Update the Q value
+    Q[s[0],s[1],a]+= alpha*(r+gamma*np.max(Q[s_new[0],s_new[1],:])-Q[s[0],s[1],a])
+    
+    episode_ended = is_episode_end(s_new)
+
+    return s_new,episode_ended
+```
+
+</div>
 
 # Deep Reinforcement Learning
 
-While methods above work quite well and actually have proofs that they'll eventually find the optimal policy out of it, it comes at a cost. It's often not feasible to store everything in the form of a table. For a simple, for the game of Go, there are an estimated $10^{170}$ number of states and at a given time and an estimated 150-250 possible actions to perform. In more real-world problems, it's often not even possible to quantify this. If we're to consider a self-driving car and simply look at the distance traveled as one value of the state, it's a continuous value. Are 1,1.1,1.111,1.11111 all different states? Even if we did have an infinite amount of memory to store all of these at the most granular level, we would still have to run all our algorithms a very large number of times so we've visited every single possible state multiple times so we update it's values even though it's very likely that the state 1,1.1,1.111,1.11111 are very similar to each other.
+While methods above work well and some actually have proofs that they'll eventually find the optimal policy out of it, it comes at a cost. It's often not feasible to store everything in the form of a table. For a simple, for the game of Go, there are an estimated $10^{170}$ number of states and at a given time and an estimated 150-250 possible actions to perform. In more real-world problems, it's often not even possible to quantify this. If we're to consider a self-driving car and simply look at the distance traveled as one value of the state, it's a continuous value. Are 1,1.1,1.111,1.11111 all different states? Even if we did have an infinite amount of memory to store all of these at the most granular level, we would still have to run all our algorithms a very large number of times so we've visited every single possible state multiple times so we update it's values even though it's very likely that the state 1,1.1,1.111,1.11111 are very similar to each other.
 
 
 
@@ -927,8 +971,8 @@ This problem is quite hard to address because we have no idea whether the move t
 \begin{equation} E_t(S) = \gamma \lambda E_{t-1}(s) + 1(S_t=s) \end{equation}
 
 
-\begin{equation} \delta_t =  R_{t+1}+\gamma V(s_{t+1}) -V(s_t) \end{equation}
-\begin{equation} V(s) = V(s) + \alpha \delta_t E_t(S) \end{equation}
+\begin{equation} \delta_t =  R_{t+1}+\gamma v(s_{t+1}) -v(s_t) \end{equation}
+\begin{equation} v(s) = v(s) + \alpha \delta_t E_t(S) \end{equation}
 
 
 
@@ -955,35 +999,35 @@ Decision making has a fundamental choice between *Exploiting* the knowledge we a
 
 
 
-### $\epsilon$-Greedy
+  ### $\epsilon$-Greedy
 
-A trade-off between Exploration and Exploitation by behaving greedily most of the time while occasionally picking a random exploratory action with probability $\epsilon$. This is one of the simplest ways to balance Exploration and Exploitation and is often used because of its simplicity and surprising power. Typical implementations of this strategy also start with a high $\epsilon$ value close to 1 and then slowly decrease it as training continues until we reach a minimum value. This is called the Decaying $\epsilon_t$-Greedy algorithm.
-
-
-
-### Boltzmann Exploration
-
-A pitfall of the $\epsilon$-Greedy approach is that it treats all actions equally when selecting exploratory actions. This isn't always true. If we already know an action is truly bad, we might not want to explore it as much as other promising ones. One way to do this is picking actions with their probability values proportional to their Q values. 
+  A trade-off between Exploration and Exploitation by behaving greedily most of the time while occasionally picking a random exploratory action with probability $\epsilon$. This is one of the simplest ways to balance Exploration and Exploitation and is often used because of its simplicity and surprising power. Typical implementations of this strategy also start with a high $\epsilon$ value close to 1 and then slowly decrease it as training continues until we reach a minimum value. This is called the Decaying $\epsilon_t$-Greedy algorithm.
 
 
 
+  ### Boltzmann Exploration
 
-\begin{equation}
-Prob(a) = \frac{e^{\frac{Q(s,a)}{\tau}}} {e^{\sum_{a' \in A } \frac{Q(s,a')}{\tau} }}
-\end{equation}
-
-
-Where $\tau$ is called the temperature constant which weighs how much we should trust only the Q values. A high $\tau$ value will force the values to be more random while a value close to 0 ensures we behave almost greedily.
+  A pitfall of the $\epsilon$-Greedy approach is that it treats all actions equally when selecting exploratory actions. This isn't always true. If we already know an action is truly bad, we might not want to explore it as much as other promising ones. One way to do this is picking actions with their probability values proportional to their Q values. 
 
 
-### Optimistic Initialization
-
-The idea here is to initialize all the action value functions to a value $r_max$ which is the maximum possible reward obtainable. This then biases the system to visit states it hasn't visited before since they're initialized with a high Q value.
 
 
-### Intrinsic Motivation
+  \begin{equation}
+  Prob(a) = \frac{e^{\frac{Q(s,a)}{\tau}}} {e^{\sum_{a' \in A } \frac{Q(s,a')}{\tau} }}
+  \end{equation}
 
-A hot topic of research right now is to find a way to intrinsically motivate an agent to explore. Extrinsic Motivation is received through the rewarding structure while Intrinsic Motivation is a way to encourage an agent simply driven by curiosity without any explicit reward. This can happen through ways like coming up with a reward for visiting a state we've never seen before.
+
+  Where $\tau$ is called the temperature constant which weighs how much we should trust only the Q values. A high $\tau$ value will force the values to be more random while a value close to 0 ensures we behave almost greedily.
+
+
+  ### Optimistic Initialization
+
+  The idea here is to initialize all the action value functions to a value $r_max$ which is the maximum possible reward obtainable. This then biases the system to visit states it hasn't visited before since they're initialized with a high Q value.
+
+
+  ### Intrinsic Motivation
+
+  A hot topic of research right now is to find a way to intrinsically motivate an agent to explore. Extrinsic Motivation is received through the rewarding structure while Intrinsic Motivation is a way to encourage an agent simply driven by curiosity without any explicit reward. This can happen through ways like coming up with a reward for visiting a state we've never seen before.
 
 
 ## Hidden States &amp; The Markovian Assumption
@@ -999,7 +1043,7 @@ Another important assumption made is that the world if fully observable. This me
 <img src="/img/rl_intro/aliased_2.png" width="200px" style="display:inline;margin-right:5px" />
 </center>
 
-In the picture to the left, the agent can "see" only the 8 neighbouring cells and decides to go down and to the left following some policy in order to go to one of the corners. It then observes that it's hit a corner and the goal isn't here and leaves by trying to move up and towards the right. It's right back where it was before the whole thing started because it can only observe the world partially and cannot see that the goal is towards the other end. It also has no "memory" because of the Markovian Property and cannot reasonably expect to solve problems like this. One way to remedy this would be to explicitly add it memory or some extra information to its state like corners it's already visited but since we're interested in building general purpose AI, this wouldn't be fair.
+In the picture to the left, the agent can "see" only the 8 neighboring cells and decides to go down and to the left following some policy in order to go to one of the corners. It then observes that it's hit a corner and the goal isn't here and leaves by trying to move up and towards the right. It's right back where it was before the whole thing started because it can only observe the world partially and cannot see that the goal is towards the other end. It also has no "memory" because of the Markovian Property and cannot reasonably expect to solve problems like this. One way to remedy this would be to explicitly add it memory or some extra information to its state like corners it's already visited but since we're interested in building general purpose AI, this wouldn't be fair.
 
 ## Defining a Reward Function
 Defining a reward function is not always a straightforward task. Although we technically consider this a part of the environment, while creating a new task you want to solve through reinforcement learning, we need to define this reward function. In games like Atari or Mario, it's easier since we already have a score and lives that in a way provide feedback about how well the agent is doing. However it's not as straightforward in a lot of real-world tasks.
@@ -1012,3 +1056,8 @@ Then the question becomes, how much is too much? The more explicitly we specify 
 
 Another way to look at this problem is through a game like chess. Typically, we have only one reward signal- either a +1 for winning or a -1 for losing. In game that lasts dozens of moves with an extremely large state space, realistically playing enough games to precisely get the credit of the win or the loss on one particular move that you made somewhere in the beginning isn't feasible so instead, rewards are based off some additional features like Piece Mobility and Piece Threats and so on. 
 
+<br>
+And that's a wrap for this super long intro post but I hope I did a good job giving you a sense of what RL's about and why it's so hard and so exciting! There's lots of fantastic work being done in the field and further posts are probably going to explore more of recent work and papers than introductions but we shall see :)
+
+Please feel free to leave comments and feedback (and possibly requests). This is my first post after all and I know there's *lots* of room for improvement.
+<hr>
