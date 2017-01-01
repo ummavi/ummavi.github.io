@@ -999,35 +999,35 @@ Decision making has a fundamental choice between *Exploiting* the knowledge we a
 
 
 
-  ### $\epsilon$-Greedy
+#### $\epsilon$-Greedy
 
-  A trade-off between Exploration and Exploitation by behaving greedily most of the time while occasionally picking a random exploratory action with probability $\epsilon$. This is one of the simplest ways to balance Exploration and Exploitation and is often used because of its simplicity and surprising power. Typical implementations of this strategy also start with a high $\epsilon$ value close to 1 and then slowly decrease it as training continues until we reach a minimum value. This is called the Decaying $\epsilon_t$-Greedy algorithm.
-
-
-
-  ### Boltzmann Exploration
-
-  A pitfall of the $\epsilon$-Greedy approach is that it treats all actions equally when selecting exploratory actions. This isn't always true. If we already know an action is truly bad, we might not want to explore it as much as other promising ones. One way to do this is picking actions with their probability values proportional to their Q values. 
+A trade-off between Exploration and Exploitation by behaving greedily most of the time while occasionally picking a random exploratory action with probability $\epsilon$. This is one of the simplest ways to balance Exploration and Exploitation and is often used because of its simplicity and surprising power. Typical implementations of this strategy also start with a high $\epsilon$ value close to 1 and then slowly decrease it as training continues until we reach a minimum value. This is called the Decaying $\epsilon_t$-Greedy algorithm.
 
 
 
+#### Boltzmann Exploration
 
-  \begin{equation}
-  Prob(a) = \frac{e^{\frac{Q(s,a)}{\tau}}} {e^{\sum_{a' \in A } \frac{Q(s,a')}{\tau} }}
-  \end{equation}
-
-
-  Where $\tau$ is called the temperature constant which weighs how much we should trust only the Q values. A high $\tau$ value will force the values to be more random while a value close to 0 ensures we behave almost greedily.
+A pitfall of the $\epsilon$-Greedy approach is that it treats all actions equally when selecting exploratory actions. This isn't always true. If we already know an action is truly bad, we might not want to explore it as much as other promising ones. One way to do this is picking actions with their probability values proportional to their Q values. 
 
 
-  ### Optimistic Initialization
-
-  The idea here is to initialize all the action value functions to a value $r_max$ which is the maximum possible reward obtainable. This then biases the system to visit states it hasn't visited before since they're initialized with a high Q value.
 
 
-  ### Intrinsic Motivation
+\begin{equation}
+Prob(a) = \frac{e^{\frac{Q(s,a)}{\tau}}} {e^{\sum_{a' \in A } \frac{Q(s,a')}{\tau} }}
+\end{equation}
 
-  A hot topic of research right now is to find a way to intrinsically motivate an agent to explore. Extrinsic Motivation is received through the rewarding structure while Intrinsic Motivation is a way to encourage an agent simply driven by curiosity without any explicit reward. This can happen through ways like coming up with a reward for visiting a state we've never seen before.
+
+Where $\tau$ is called the temperature constant which weighs how much we should trust only the Q values. A high $\tau$ value will force the values to be more random while a value close to 0 ensures we behave almost greedily.
+
+
+#### Optimistic Initialization
+
+The idea here is to initialize all the action value functions to a value $r_max$ which is the maximum possible reward obtainable. This then biases the system to visit states it hasn't visited before since they're initialized with a high Q value.
+
+
+#### Intrinsic Motivation
+
+A hot topic of research right now is to find a way to intrinsically motivate an agent to explore. Extrinsic Motivation is received through the rewarding structure while Intrinsic Motivation is a way to encourage an agent simply driven by curiosity without any explicit reward. This can happen through ways like coming up with a reward for visiting a state we've never seen before.
 
 
 ## Hidden States &amp; The Markovian Assumption
@@ -1056,8 +1056,12 @@ Then the question becomes, how much is too much? The more explicitly we specify 
 
 Another way to look at this problem is through a game like chess. Typically, we have only one reward signal- either a +1 for winning or a -1 for losing. In game that lasts dozens of moves with an extremely large state space, realistically playing enough games to precisely get the credit of the win or the loss on one particular move that you made somewhere in the beginning isn't feasible so instead, rewards are based off some additional features like Piece Mobility and Piece Threats and so on. 
 
-<br>
+<center>
+  <br>
+  <hr width="30%">
+  <br>
+  
+</center>
 And that's a wrap for this super long intro post but I hope I did a good job giving you a sense of what RL's about and why it's so hard and so exciting! There's lots of fantastic work being done in the field and further posts are probably going to explore more of recent work and papers than introductions but we shall see :)
 
 Please feel free to leave comments and feedback (and possibly requests). This is my first post after all and I know there's *lots* of room for improvement.
-<hr>
