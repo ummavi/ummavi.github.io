@@ -192,11 +192,11 @@ iter_pe=0;
 
 Reinforcement Learning deals with problems where an agent needs to learn to interact with its environment through a number of actions and try to maximise the total reward it gets over time. The core of it lies in the fact that the agent is not taught what actions to take when but has to discover this on its own through its repeated interactions with the environment. This feels natural to us since it's an integral part of how humans or animals learn and much of the techniques developed are inspired by Psychology and Neuroscience. 
 
-RL is **huge** right now. It's changing the world around us with Self-Driving Cars,[beating professional gamers at retro games](http://www.nature.com/nature/journal/v518/n7540/full/nature14236.html), [Doom!](https://www.cmu.edu/news/stories/archives/2016/september/AI-agent-survives-doom.html), beating world champions at games considered impossible for computers to solve just years ago ([Go](https://deepmind.com/research/alphago/), [Backgammon](https://en.wikipedia.org/wiki/TD-Gammon), [Chess](http://spawk.fish/)) , Quantitative Finance,[Making Data Centers more Energy Efficient](https://deepmind.com/blog/deepmind-ai-reduces-google-data-centre-cooling-bill-40/), [Robotics](https://www.youtube.com/watch?v=QxQKI1O2ep0) and so much more.
+RL is **huge** right now. It's changing the world around us with Self-Driving Cars, [beating professional gamers at retro games](http://www.nature.com/nature/journal/v518/n7540/full/nature14236.html), [Doom!](https://www.cmu.edu/news/stories/archives/2016/september/AI-agent-survives-doom.html), beating world champions at games considered impossible for computers to solve just years ago ([Go](https://deepmind.com/research/alphago/), [Backgammon](https://en.wikipedia.org/wiki/TD-Gammon), [Chess](http://spawk.fish/)), Quantitative Finance,[Making Data Centers more Energy Efficient](https://deepmind.com/blog/deepmind-ai-reduces-google-data-centre-cooling-bill-40/), [Robotics](https://www.youtube.com/watch?v=QxQKI1O2ep0) and so much more.
 
 While most of the key concepts in Reinforcement Learning were decades ago, explosive success in Deep Learning has given a second wind to Reinforcement Learning and techniques combining them are often called Deep Reinforcement Learning. 
 
-The goal of writing this introductory series of posts is to demonstrate how simple but powerful the key ideas in RL are and how easy it is to get an understanding of what the state of the art performing system as of last year was. I'll make it a point to explain the math as simply and intuitively as I possibly can and luckily, a lot of the math behind RL is very easy to understand through visualization. Before I actually start with anything, I'd like to point out that if you'd like to know more about Reinforcement Learning, [Sutton & Barto's Book on RL](https://webdocs.cs.ualberta.ca/~sutton/book/the-book.html) is very approachable even without too much background knowledge and considered a bible. I'll be using this book heavily throughout. I'll also be sticking to their notation since it's popular and will hopefully be easier to look things up from there when it's needed.
+The goal of writing this introductory series of posts is to show how simple but powerful the key ideas in RL are and how easy it is to get an understanding of what the state of the art performing system as of last year was. I'll make it a point to explain the math as simply and intuitively as I possibly can and luckily, a lot of the math behind RL is very easy to understand through visualization. Before I actually start with anything, I'd like to point out that if you'd like to know more about Reinforcement Learning, [Sutton & Barto's Book on RL](https://webdocs.cs.ualberta.ca/~sutton/book/the-book.html) is very approachable even without too much background knowledge and considered a bible. I'll be using this book heavily throughout. I'll also be sticking to their notation since it's popular and will hopefully be easier to look things up from there when it's needed.
 
 # The Reinforcement Learning Problem
 
@@ -434,7 +434,7 @@ While that equation looks intimidating, it's actually rather easy to understand 
  \operatorname{E}[X] = \sum_{i=1}^\infty x_i\, p_i 
 \end{equation}
 
-Simply put, consider a game where I win \$2 whenever I roll a 6 with a dice and lose \$0.5 for every other number, my *Expected Value* or the value of money I expect to win/lose if I keep playing for a long,long time is simply the sum of values multiplied by the probability it occurs. For this example, it would be $2$x$\frac{1}{6}+(-0.5$x$\frac{5}{6})=-0.833$ so it probably doesn't make sense to play the game. 
+Simply put, consider a game where I win \$2 whenever I roll a 6 with a dice and lose \$0.5 for every other number, my *Expected Value* or the value of money I expect to win/lose if I keep playing for a long, long time is simply the sum of values multiplied by the probability it occurs. For this example, it would be $2$x$\frac{1}{6}+(-0.5$x$\frac{5}{6})=-0.833$ so it probably doesn't make sense to play the game. 
 
 The first $\sum_{a \in A} \pi(a|s)$ term is just a way to express what's happening at the first node in our backup diagram. We have multiple actions we can perform and the probability of picking an action given the current state is given by the policy($\pi$) we're currently following. 
 
@@ -615,25 +615,31 @@ Lastly, the $\gamma$ term is what's called a discount factor. It's a mechanism t
 # Policy Evaluation
 Policy Evaluation is a way to evaluate an already known policy and see how well you'd perform following it. It's a direct application of the above value function equation. This is a simplistic example to show how values propagate over time and slowly converge towards their true values in gridworld.  
 
-<div style="width:700px;margin-left: auto;margin-right: auto;">
+<div style="width:500px;margin-left: auto;margin-right: auto;">
 
-    <div id="gw_v" style="float:right;width:300px"></div>
+    <div id="gw_v" style="width:300px;margin-left: auto;margin-right: auto;margin-bottom: 5px"></div>
 
-    <div>
+
     <table cellpadding=0 cellspacing=0 style="table-layout:fixed;width:185px;margin-left: auto;margin-right: auto">
     <tr> <td colspan="3" style="text-align:center">Policy </td></tr>
-    <tr> <td> </td> <td style="text-align:center"> <input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),5,5)' size=6 type="text" id="pe_up" value="0.25"> </td> <td> </td> </tr> 
-    <tr> <td style="text-align:center"> <input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),5,5)' size=6 type="text" id="pe_left" value="0.25"> </td> <td> </td> <td style="text-align:center"> <input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),5,5)' size=6 type="text" id="pe_right" value="0.25"> </td></tr>
-    <tr> <td> </td> <td style="text-align:center"> <input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),5,5)' size=6 type="text" id="pe_down" value="0.25"> </td><td> </td> </tr> 
+    <tr> <td> </td> <td style="text-align:center"> <input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),5,5)' size=4 type="text" id="pe_up" value="0.25"> </td> <td> </td> </tr> 
+    <tr> <td style="text-align:center"> <input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),5,5)' size=4 type="text" id="pe_left" value="0.25"> </td> <td> </td> <td style="text-align:center"> <input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),5,5)' size=4 type="text" id="pe_right" value="0.25"> </td></tr>
+    <tr> <td> </td> <td style="text-align:center"> <input style="border: 0px" onchange='pe_gridworld($("#gw_f"),$("#gw_v"),5,5)' size=4 type="text" id="pe_down" value="0.25"> </td><td> </td> </tr> 
     </table>
 
 
-    <span class="bton" style="margin-bottom:0px" onclick="$('#pe_up').val('0.25');$('#pe_down').val('0.25');$('#pe_left').val('0.25');$('#pe_right').val('0.25');pe_gridworld($('#gw_f'),$('#gw_v'),5,5)">Uniform Random</span>
-    <span class="bton" style="margin-bottom:0px" onclick="$('#pe_up').val('1');$('#pe_down').val('0');$('#pe_left').val('0');$('#pe_right').val('0');pe_gridworld($('#gw_f'),$('#gw_v'),5,5)">Always Up</span>
-    <span class="bton" style="margin-bottom:0px" onclick="$('#pe_up').val('0');$('#pe_down').val('0');$('#pe_left').val('0');$('#pe_right').val('1');pe_gridworld($('#gw_f'),$('#gw_v'),5,5)">Always Right</span>
+    <div style="width:400px;margin-left: auto;margin-right: auto">
+
+      <span class="bton" style="margin-bottom:0px" onclick="$('#pe_up').val('0.25');$('#pe_down').val('0.25');$('#pe_left').val('0.25');$('#pe_right').val('0.25');pe_gridworld($('#gw_f'),$('#gw_v'),5,5)">Uniform Random</span>
+      <span class="bton" style="margin-bottom:0px" onclick="$('#pe_up').val('1');$('#pe_down').val('0');$('#pe_left').val('0');$('#pe_right').val('0');pe_gridworld($('#gw_f'),$('#gw_v'),5,5)">Always Up</span>
+      <span class="bton" style="margin-bottom:0px" onclick="$('#pe_up').val('0');$('#pe_down').val('0');$('#pe_left').val('0');$('#pe_right').val('1');pe_gridworld($('#gw_f'),$('#gw_v'),5,5)">Always Right</span>
+
     </div>
+
+<div style="font-size:10px;width:600px;margin-left: auto;margin-right: auto">The Uniform Random Policy is the default value and shows you the value of every state if you randomly pick one of your 4 options every time with equal probability. Note: You can edit these values at will. They are normalized to a [0,1] range and taken as probabilities. The computation will only run for 40 iterations. </div> 
+
+
 </div>
-<span style="font-size:10px">The Uniform Random Policy is the default value and shows you the value of every state if you randomly pick one of your 4 options every time with equal probability. Note: You can edit these values at will. They are normalized to a [0,1] range and taken as probabilities. The computation will only run for 40 iterations. </span> 
 
 A code snippet to see how Policy Evaluation can be implemented in Python is given below:
 
@@ -923,7 +929,6 @@ def q_step(s):
     '''
     Perform one step of the Q Learning. 
     '''
-    global Q
 
     #Choose an action epsilon greedily
     a = choose_action(s)
@@ -943,7 +948,7 @@ def q_step(s):
 
 # Deep Reinforcement Learning
 
-While methods above work well and some actually have proofs that they'll eventually find the optimal policy out of it, it comes at a cost. It's often not feasible to store everything in the form of a table. For a simple, for the game of Go, there are an estimated $10^{170}$ number of states and at a given time and an estimated 150-250 possible actions to perform. In more real-world problems, it's often not even possible to quantify this. If we're to consider a self-driving car and simply look at the distance traveled as one value of the state, it's a continuous value. Are 1,1.1,1.111,1.11111 all different states? Even if we did have an infinite amount of memory to store all of these at the most granular level, we would still have to run all our algorithms a very large number of times so we've visited every single possible state multiple times so we update it's values even though it's very likely that the state 1,1.1,1.111,1.11111 are very similar to each other.
+While methods above work well and some actually have proofs that they'll eventually find the optimal policy out of it, it comes at a cost. It's often not feasible to store everything in the form of a table. For a simple, for the game of Go, there are an estimated $10^{170}$ number of states and at a given time and an estimated 150-250 possible actions to perform. In more real-world problems, it's often not even possible to quantify this. If we're to consider a self-driving car and simply look at the distance travelled as one value of the state, it's a continuous value. Are 1,1.1,1.111,1.11111 all different states? Even if we did have an infinite amount of memory to store all of these at the most granular level, we would still have to run all our algorithms a very large number of times so we've visited every single possible state multiple times so we update it's values even though it's very likely that the state 1,1.1,1.111,1.11111 are very similar to each other.
 
 
 
@@ -1022,7 +1027,7 @@ Where $\tau$ is called the temperature constant which weighs how much we should 
 
 #### Optimistic Initialization
 
-The idea here is to initialize all the action value functions to a value $r_max$ which is the maximum possible reward obtainable. This then biases the system to visit states it hasn't visited before since they're initialized with a high Q value.
+The idea here is to initialize all the action value functions to a value $r_{max}$ which is the maximum possible reward obtainable. This then biases the system to visit states it hasn't visited before since they're initialized with a high Q value.
 
 
 #### Intrinsic Motivation
@@ -1032,7 +1037,7 @@ A hot topic of research right now is to find a way to intrinsically motivate an 
 
 ## Hidden States &amp; The Markovian Assumption
 
-Current RL systems are modeled as a Markov Decision Process as we've already discussed. One aspect of this we haven't mentioned yet is the Markovian Property. The Markov Property assumes that the past doesn't matter and that the next state only depends on the current one and not any of the ones in the past. Another way of putting this is that the current state tells you everything you need to know to make a decision and knowing the past won't help. This is a pretty strong assumption but it holds true for a surprising number situations. However, for many real-world situations, this Markov Assumption does not hold true and your current state is very closely related to what you did in the past.
+Current RL systems are modelled as a Markov Decision Process as we've already discussed. One aspect of this we haven't mentioned yet is the Markovian Property. The Markov Property assumes that the past doesn't matter and that the next state only depends on the current one and not any of the ones in the past. Another way of putting this is that the current state tells you everything you need to know to make a decision and knowing the past won't help. This is a pretty strong assumption but it holds true for a surprising number situations. However, for many real-world situations, this Markov Assumption does not hold true and your current state is very closely related to what you did in the past.
 
 Another important assumption made is that the world if fully observable. This means that the current state fully captures all the information we need in order to make a decision. Consider a simple extension of the gridworld but now, the goal spawns at one of the 4 corners of the map randomly and the agent can only sense a small portion around it. 
 
@@ -1043,10 +1048,10 @@ Another important assumption made is that the world if fully observable. This me
 <img src="/img/rl_intro/aliased_2.png" width="200px" style="display:inline;margin-right:5px" />
 </center>
 
-In the picture to the left, the agent can "see" only the 8 neighboring cells and decides to go down and to the left following some policy in order to go to one of the corners. It then observes that it's hit a corner and the goal isn't here and leaves by trying to move up and towards the right. It's right back where it was before the whole thing started because it can only observe the world partially and cannot see that the goal is towards the other end. It also has no "memory" because of the Markovian Property and cannot reasonably expect to solve problems like this. One way to remedy this would be to explicitly add it memory or some extra information to its state like corners it's already visited but since we're interested in building general purpose AI, this wouldn't be fair.
+In the picture to the left, the agent can "see" only the 8 neighbouring cells and decides to go down and to the left following some policy in order to go to one of the corners. It then observes that it's hit a corner and the goal isn't here and leaves by trying to move up and towards the right. It's right back where it was before the whole thing started because it can only observe the world partially and cannot see that the goal is towards the other end. It also has no "memory" because of the Markovian Property and cannot reasonably expect to solve problems like this. One way to remedy this would be to explicitly add it memory or some extra information to its state like corners it's already visited but since we're interested in building general purpose AI, this wouldn't be fair.
 
 ## Defining a Reward Function
-Defining a reward function is not always a straightforward task. Although we technically consider this a part of the environment, while creating a new task you want to solve through reinforcement learning, we need to define this reward function. In games like Atari or Mario, it's easier since we already have a score and lives that in a way provide feedback about how well the agent is doing. However it's not as straightforward in a lot of real-world tasks.
+Defining a reward function is not always a straightforward task. Although we technically consider this a part of the environment, while creating a new task you want to solve through reinforcement learning, we need to define this reward function. In games like Atari or Mario, it's easier since we already have a score and lives that in a way provide feedback about how well the agent is doing. However, it's not as straightforward in a lot of real-world tasks.
 
 Consider a task like teaching a robotic arm to pick up a glass of water without spilling it. We might think it's straightforward to just give a +1 reward when it performs the task perfectly and nothing else but consider the problem of credit assignment. The arm does hundreds and thousands of trials just flailing about not knowing what to do. Sometimes it touches the glass, sometimes it knocks over the glass. Finally, it picks up the glass but spills a bit of water so we don't give it the +1. The agent has no way of distinguishing this trail from all the other random actions it's done till now although it was pretty close to what we wanted and it will continue to flail about trying random actions trying to figure out what to do.
 
@@ -1060,8 +1065,16 @@ Another way to look at this problem is through a game like chess. Typically, we 
   <br>
   <hr width="30%">
   <br>
-  
+
 </center>
-And that's a wrap for this super long intro post but I hope I did a good job giving you a sense of what RL's about and why it's so hard and so exciting! There's lots of fantastic work being done in the field and further posts are probably going to explore more of recent work and papers than introductions but we shall see :)
+And that's a wrap for this super long intro post but I hope I did a good job giving you a sense of what RL's about and why it's challenging and so exciting! There's lots of fantastic work being done in the field and further posts are probably going to explore more of recent work and papers than introductions but we shall see :)
 
 Please feel free to leave comments and feedback (and possibly requests). This is my first post after all and I know there's *lots* of room for improvement.
+
+Links and Resources:
+
+* [Reinforcement Learning: An Introduction - Sutton &amp; Barto](https://webdocs.cs.ualberta.ca/~sutton/book/the-book-2nd.html)
+* [David Silver's RL Course](http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html)
+* [Andrej Karpathy's Deep Learning Course](https://cs231n.github.io/)
+* [Berkley's Deep RL Course](http://rll.berkeley.edu/deeprlcourse/)
+* [Nando de Freitas' ML Course](https://www.cs.ox.ac.uk/people/nando.defreitas/machinelearning/)
