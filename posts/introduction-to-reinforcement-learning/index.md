@@ -422,27 +422,35 @@ As mentioned before, the end goal of this is to derive a policy and there are a 
 
 ## Value Function ($v$)
 
-A value function is a measure of how "good" a state is. Given a state $s$ and you're following a policy $\pi$, it's value $v^{\pi}(s)$ is the expected sum of reward of being in that state. Mathematically, this is represented as complicated looking but surprisingly simple equation:
+A value function is a measure of how "good" a state is. Given a state $s$ and you're following a policy $\pi$, it's value $v^{\pi}(s)$ is the *expected total reward* of being in that state. In other words, The value of the state is the total amount of reward an agent can expect to accumulate over time starting from that state.
+
+Since I mentioned the term *Expected total reward*, let's take a quick look at what an *Expected Value* from Probability Theory is. Suppose a random variable X can take value $x_1$ with probability $p_1$, value $x_2$ with probability $p_2$, and so on, up to value $x_k$ with probability $p_k$. Then the expectation of this random variable X is given by 
+
+\begin{equation}
+\operatorname{E}[X] = \sum_{i=1}^\infty x_i\, p_i 
+\end{equation}
+
+Simply put, consider a game where I win \$2 whenever I roll a 6 with a dice and lose \$0.5 for every other number, my *Expected Value* or the value of money I expect to win/lose if I keep playing for a long, long time is simply the sum of values multiplied by the probability it occurs. For this example, it would be $2$x$\frac{1}{6}+(-0.5$x$\frac{5}{6})=-0.833$ so it probably doesn't make sense to play the game.
+
+Going back to the Value Function, it's represented by this complicated looking but surprisingly simple equation:
 
 \begin{equation}
 v^{\pi} (s) = \sum_{a \in A} \pi(a|s) (\sum_{s'\in S} P^a_{ss'}(R^a_{ss'} + \gamma v^{\pi}(s'))
 \end{equation}
 
-While that equation looks intimidating, it's actually rather easy to understand if we go back to the visualization and break it down into the pieces. But before that, a quick aside about *Expected Value* will help us better understand what's going on. Suppose a random variable X can take value $x_1$ with probability $p_1$, value $x_2$ with probability $p_2$, and so on, up to value $x_k$ with probability $p_k$. Then the expectation of this random variable X is defined as
+The first $\sum_{a \in A} \pi(a|s)$ term is just a way of representing the fact that we have multiple actions we can perform and the probability of picking an action given the current state is given by the policy($\pi$) we're currently following. This represents the first level of the backup diagram shown below.
 
-\begin{equation}
- \operatorname{E}[X] = \sum_{i=1}^\infty x_i\, p_i 
-\end{equation}
+The next $\sum_{s'\in S} P^a_{ss'}$ part is a way of saying there are multiple states we could end up in after we've picked our action (for stochastic environments) and the State Transition Function gives us a probability assigned to each of the possible target states. This is represented by the second level of the backup diagram.
 
-Simply put, consider a game where I win \$2 whenever I roll a 6 with a dice and lose \$0.5 for every other number, my *Expected Value* or the value of money I expect to win/lose if I keep playing for a long, long time is simply the sum of values multiplied by the probability it occurs. For this example, it would be $2$x$\frac{1}{6}+(-0.5$x$\frac{5}{6})=-0.833$ so it probably doesn't make sense to play the game. 
+Let's put aside the summation for now and focus on just one of these values. The multiplication of the terms $\pi(a|s)$ and $P^a_{ss'}$ gives us the probability of starting in some state $s$, picking an action $a$ and ending up in state $s'$. This gives us the "$p_i$"s to calculate the expected value.
 
-The first $\sum_{a \in A} \pi(a|s)$ term is just a way to express what's happening at the first node in our backup diagram. We have multiple actions we can perform and the probability of picking an action given the current state is given by the policy($\pi$) we're currently following. 
+Now, the term $(R^a_{ss'} + \gamma v^{\pi}(s'))$ is the essentially the reward received in transitioning from $s \rightarrow s'$ (while picking the action $a$) and the value at that new state $v^{\pi}(s')$. Put another way, this sum is the total reward I get for going to this new state and all the future rewards I can get from being in that new state. With this, we have the "$x_i$"s needed to calculated the expected value.
 
-The next $\sum_{s'\in S} P^a_{ss'}$ part represents the second level of our backup diagram where there are multiple states we can end up in after we've picked our action and the State Transition Function (P) gives us a probability value assigned to each of the possible target states.
+Now all that's left for the $\operatorname{E}[X]$ calculation is the $\sum_{i=1}^\infty$ part and that's what the summation term $\sum_{a \in A}$ is for. This is simpler to see in the gridworld but this whole procedure is actually just saying a state is as good as the reward we get from moving to the neighboring cells and all the rewards we can get from then onwards. 
 
-This is very reminiscent of what we do in Probability using a <a href="http://www.onlinemathlearning.com/tree-diagram.html"> tree diagram </a>. To find the probability of ending up in one of the target states, it's the product of the probability of picking that action and the chances of ending up there. We then use these probabilities to weigh the value function at that state. This is like saying if I have 6 possible states to end up in and a $\frac{1}{6}$ chance of ending up in a state that has a value of +1 and $\frac{5}{6}$ chances of a value 0, then my current value is $\frac{1}{6}$x$1$ + $\frac{5}{6}$x$0$ = $0.16$. Visually, the value function propagates in the reverse direction like the diagram below. 
+Lastly, the $\gamma$ term is what's called a discount factor. It's a mechanism to weigh the importance of immediate rewards vs rewards far off in the future. A value close to 1 would imply we care about the long-term expected reward while a value closer to 0 means we care more about immediate rewards.
 
-We can think of it as two "stages". First, we go through the transitions and see what are the possible states we can end up in. This is represented in blue. Second, we take the values and start "backing" them up. The first summation is at the State Transition level $(\sum_{s'\in S} P^a_{ss'}(R^a_{ss'} + \gamma v(s'))$ as represented by the region that first becomes red below. We take the value functions of the states we can end up in when we pick that action and sum it up while multiplying it with the probability of ending up in that state. We then take those values and further sum it back while multiplying with the policy in $\sum_{a \in A} \pi(a|s)$ as represented by the second part that becomes red.
+It helps to visualize this process in two stages. One, we look at all the possible states we can end up in (shown in blue below) and then take all those values and "back" them up to the current state (shown in red).
 
 <div id="cy2"></div>
 <script>
@@ -610,7 +618,7 @@ To see how this actually works in action, let's describe a game that was partial
 v^{\pi} (s) = \sum_{a \in A} \pi(a|s) (R^a_{ss'} + \gamma v^{\pi}(s'))
 \end{equation}
 
-Lastly, the $\gamma$ term is what's called a discount factor. It's a mechanism to weigh the importance of immediate rewards vs rewards far off in the future. A value close to 1 would imply we care about the long-term expected reward while a value closer to 0 means we care more about immediate rewards.
+One thing to note is the fact the definition of v uses the v of it's neighbors i.e- it's recursive and as we require for all recursive definitions, we need an initial value for the Value Function. Typically, we just initialize all the values with zeros and run this formula over and over again for every state and eventually, we'll reach a point where the values don't change much from one iteration to the next and this we consider is the Value Function of the environment. We can see how these values initialize and propagate in the Policy Evaluation section below.
 
 # Policy Evaluation
 Policy Evaluation is a way to evaluate an already known policy and see how well you'd perform following it. It's a direct application of the above value function equation. This is a simplistic example to show how values propagate over time and slowly converge towards their true values in gridworld.  
@@ -1078,3 +1086,6 @@ Links and Resources:
 * [Andrej Karpathy's Deep Learning Course](https://cs231n.github.io/)
 * [Berkley's Deep RL Course](http://rll.berkeley.edu/deeprlcourse/)
 * [Nando de Freitas' ML Course](https://www.cs.ox.ac.uk/people/nando.defreitas/machinelearning/)
+
+
+** Edited 2nd Jan, 2017: Rewrote the explanation for the Value Function since people said it was still a little confusing. **
