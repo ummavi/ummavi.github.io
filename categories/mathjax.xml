@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>About Machines That Learn &amp; Think (mathjax)</title><link>http://ummavi.github.io/</link><description></description><atom:link rel="self" href="http://ummavi.github.io/categories/mathjax.xml" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Mon, 02 Jan 2017 12:13:48 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Introduction to Reinforcement Learning</title><link>http://ummavi.github.io/posts/introduction-to-reinforcement-learning/</link><dc:creator>Avinash Ummadisingu</dc:creator><description>&lt;div&gt;&lt;script&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>About Machines That Learn &amp; Think (Posts about mathjax)</title><link>http://ummavi.github.io/</link><description></description><atom:link rel="self" type="application/rss+xml" href="http://ummavi.github.io/categories/mathjax.xml"></atom:link><language>en</language><lastBuildDate>Tue, 10 Jul 2018 21:56:56 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Introduction to Reinforcement Learning</title><link>http://ummavi.github.io/posts/introduction-to-reinforcement-learning/</link><dc:creator>Avinash Ummadisingu</dc:creator><description>&lt;div&gt;&lt;script&gt;
 var gridworld,vals,vals_old,pe_id;
 pe_id = -1;
 var vi_id = -1;
@@ -602,7 +602,8 @@ v^{\pi} (s) = \sum_{a \in A} \pi(a|s) (R^a_{ss'} + \gamma v^{\pi}(s'))
 
     &lt;/div&gt;
 
-&lt;div style="font-size:10px;width:600px;margin-left: auto;margin-right: auto"&gt;The Uniform Random Policy is the default value and shows you the value of every state if you randomly pick one of your 4 options every time with equal probability. Note: You can edit these values at will. They are normalized to a [0,1] range and taken as probabilities. The computation will only run for 40 iterations. &lt;/div&gt;
+&lt;div style="font-size:10px;width:600px;margin-left: auto;margin-right: auto"&gt;The Uniform Random Policy is the default value and shows you the value of every state if you randomly pick one of your 4 options every time with equal probability. Note: You can edit these values at will. They are normalized to a [0,1] range and taken as probabilities. The computation will only run for 40 iterations. &lt;/div&gt; 
+
 
 &lt;/div&gt;
 

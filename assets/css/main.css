@@ -2292,6 +2292,7 @@ h1 {
 a {
     text-decoration: none;
     color: rgba(0, 0, 0, 1);
+    font-weight: 600;
 }
 a:visited {
     color: rgba(0, 0, 0, 0.8)

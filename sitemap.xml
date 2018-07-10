@@ -7,34 +7,30 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>http://ummavi.github.io/</loc>
-  <lastmod>2016-12-28T14:19:00Z</lastmod>
+  <lastmod>2018-07-10T21:56:00Z</lastmod>
  </url>
  <url>
   <loc>http://ummavi.github.io/2016/</loc>
-  <lastmod>2016-12-28T14:19:00Z</lastmod>
- </url>
- <url>
-  <loc>http://ummavi.github.io/about/</loc>
-  <lastmod>2016-12-28T14:19:00Z</lastmod>
+  <lastmod>2018-07-10T21:56:00Z</lastmod>
  </url>
  <url>
   <loc>http://ummavi.github.io/archive.html</loc>
-  <lastmod>2017-01-06T11:23:00Z</lastmod>
+  <lastmod>2018-07-10T21:56:00Z</lastmod>
  </url>
  <url>
   <loc>http://ummavi.github.io/categories/</loc>
-  <lastmod>2016-12-28T14:19:00Z</lastmod>
+  <lastmod>2018-07-10T21:56:00Z</lastmod>
  </url>
  <url>
   <loc>http://ummavi.github.io/categories/mathjax/</loc>
-  <lastmod>2016-12-28T14:19:00Z</lastmod>
+  <lastmod>2018-07-10T21:56:00Z</lastmod>
  </url>
  <url>
   <loc>http://ummavi.github.io/posts/introduction-to-reinforcement-learning/</loc>
-  <lastmod>2016-12-28T14:19:00Z</lastmod>
+  <lastmod>2018-07-10T21:56:00Z</lastmod>
  </url>
  <url>
   <loc>http://ummavi.github.io/the-reading-list/</loc>
-  <lastmod>2016-12-28T14:19:00Z</lastmod>
+  <lastmod>2018-07-10T21:56:00Z</lastmod>
  </url>
 </urlset>
