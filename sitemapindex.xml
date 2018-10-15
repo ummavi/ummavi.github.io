@@ -6,15 +6,19 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
+  <loc>http://ummavi.github.io/categories/cat_posts.xml</loc>
+  <lastmod>2018-10-15T13:16:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>http://ummavi.github.io/categories/mathjax.xml</loc>
-  <lastmod>2018-07-10T21:56:00Z</lastmod>
+  <lastmod>2018-10-15T13:16:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://ummavi.github.io/rss.xml</loc>
-  <lastmod>2018-07-10T21:56:00Z</lastmod>
+  <lastmod>2018-10-15T13:16:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://ummavi.github.io/sitemap.xml</loc>
-  <lastmod>2018-07-10T21:56:00Z</lastmod>
+  <lastmod>2018-10-15T13:16:00Z</lastmod>
  </sitemap>
 </sitemapindex>
