@@ -186,14 +186,15 @@ POSTS = (
     ("posts/*.txt", "posts", "post.tmpl"),
     ("posts/*.html", "posts", "post.tmpl"),
     ("posts/*.ipynb", "posts", "post.tmpl"),
-
+    ("notes/*.md", "notes", "paper.tmpl"),
+    ("notes/*.rst", "notes", "paper.tmpl"),
 )
 PAGES = (
     ("pages/*.md", "", "page.tmpl"),
     ("pages/*.rst", "", "page.tmpl"),
     ("pages/*.txt", "", "page.tmpl"),
     ("pages/*.html", "", "page.tmpl"),
-    ("pages/*.ipynb", "", "page.tmpl"),
+    ("pages/*.ipynb", "", "page.tmpl")
 
 )
 
@@ -1171,7 +1172,7 @@ MARKDOWN_EXTENSIONS = ['fenced_code', 'codehilite', 'extra']
 
 # If you hate "Filenames with Capital Letters and Spaces.md", you should
 # set this to true.
-UNSLUGIFY_TITLES = True
+FILE_METADATA_UNSLUGIFY_TITLES = True
 
 # Additional metadata that is added to a post when creating a new_post
 # ADDITIONAL_METADATA = {}
@@ -1262,3 +1263,5 @@ GLOBAL_CONTEXT = {}
 # GLOBAL_CONTEXT as parameter when the template is about to be
 # rendered
 GLOBAL_CONTEXT_FILLER = []
+
+STORY_INDEX = True

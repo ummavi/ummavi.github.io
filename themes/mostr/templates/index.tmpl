@@ -4,70 +4,89 @@
 <%inherit file="base_noheader.tmpl"/>
 
 <%block name="extra_head">
-    ${parent.extra_head()}
-    % if posts and (permalink == '/' or permalink == '/' + index_file):
-        <link rel="prefetch" href="${posts[0].permalink()}" type="text/html">
-    % endif
+		${parent.extra_head()}
+		% if posts and (permalink == '/' or permalink == '/' + index_file):
+				<link rel="prefetch" href="${posts[0].permalink()}" type="text/html">
+		% endif
 </%block>
 
 <%block name="content">
 <%block name="content_header"></%block>
-% for post in posts:
-    <article class="hentry">
+<article class="hentry">
+		<h3 style="font-weight:1000;text-align: center;"> Avinash Ummadisingu </h3>
+		<img src="/img/uav.jpg" class="img-circle" width="150px" alt = "Avinash Ummadisingu">
+		<div style="text-align: center;margin-bottom: 25px"> 
+					<div><a href="/misc/cv.pdf"><strong> CV </strong></a> /<a href="https://scholar.google.ch/citations?user=ktaK03YAAAAJ"> <strong> Google Scholar </strong> </a></div>
+					<span style="color:#000000;font-size:24px">
+								<a href="mailto:avinash.ummadisingu@usi.ch" target="_blank" rel="noopener noreferrer"><i class=" header_social_btn fa fa-fw fa-envelope-square"></i> </a>
+								<a href="http://twitter.com/ummavi" target="_blank" rel="noopener noreferrer"><i class=" header_social_btn fa fa-fw fa-twitter-square"></i> </a>
+								<a href="http://facebook.com/ummavi" target="_blank" rel="noopener noreferrer"><i class=" header_social_btn fa fa-fw fa-facebook-square"></i> </a>
+								<a href="http://linkedin.com/in/avinashumm" target="_blank" rel="noopener noreferrer"><i class=" header_social_btn fa fa-fw fa-linkedin-square"></i> </a>
+								<a href="http://github.com/ummavi" target="_blank" rel="noopener noreferrer"><i class=" header_social_btn fa fa-fw fa-github"></i> </a>
+					</span>
+					
+		</div>
 
-<h3 style="font-weight:1000;text-align: center;"> Avinash Ummadisingu </h3>
-<img src="/img/uav.jpg" class="img-circle" width="150px" alt = "Avinash Ummadisingu">
-<div style="text-align: center;margin-bottom: 25px"> 
-      <div><a href="/misc/cv.pdf"><strong> CV </strong></a> /<a href="https://scholar.google.ch/citations?user=ktaK03YAAAAJ"> <strong> Google Scholar </strong> </a></div>
-      <span style="color:#000000;font-size:24px">
-            <a href="mailto:avinash.ummadisingu@usi.ch" target="_blank" rel="noopener noreferrer"><i class=" header_social_btn fa fa-fw fa-envelope-square"></i> </a>
-            <a href="http://twitter.com/ummavi" target="_blank" rel="noopener noreferrer"><i class=" header_social_btn fa fa-fw fa-twitter-square"></i> </a>
-            <a href="http://facebook.com/ummavi" target="_blank" rel="noopener noreferrer"><i class=" header_social_btn fa fa-fw fa-facebook-square"></i> </a>
-            <a href="http://linkedin.com/in/avinashumm" target="_blank" rel="noopener noreferrer"><i class=" header_social_btn fa fa-fw fa-linkedin-square"></i> </a>
-            <a href="http://github.com/ummavi" target="_blank" rel="noopener noreferrer"><i class=" header_social_btn fa fa-fw fa-github"></i> </a>
-      </span>
-      
-</div>
-
-I recently graduated with a Masters in Informatics at Università della Svizzera italiana supervised by <a href="http://people.idsia.ch/~juergen/">Prof. Jürgen Schmidhuber</a> and <a href="http://paulorauber.com/">Dr. Paulo E. Rauber</a>. My research interests center around Deep Reinforcement Learning and in particular, Hierarchical Reinforcement Learning and building more sample efficient RL systems.
+		I recently graduated with a Masters in Informatics at Università della Svizzera italiana supervised by <a href="http://people.idsia.ch/~juergen/">Prof. Jürgen Schmidhuber</a> and <a href="http://paulorauber.com/">Dr. Paulo E. Rauber</a>. My research interests center around Deep Reinforcement Learning and in particular, Hierarchical Reinforcement Learning and building more sample efficient RL systems.
 
 
-<h4> Papers </h4>
+		<h4> Papers </h4>
 
-<ul>
-  <li style="margin-bottom:10px"> <a href="/docs/thesis.pdf"><strong>Improving Sample Efficiency in Hindsight Policy
-Gradient Using Actor-Critic Architectures</strong></a> <br>
-  Master’s Thesis, 2018  <br>
-  [<a href="/docs/thesis.pdf">PDF</a>] [<a href="https://thesis.bul.sbu.usi.ch/theses/1630-1718Ummadisingu/pdf?1539232692">PDF (mirror)</a>] 
-</li>
+		<ul>
+			<li style="margin-bottom:10px"> <a href="/docs/thesis.pdf"><strong>Improving Sample Efficiency in Hindsight Policy
+		Gradient Using Actor-Critic Architectures</strong></a> <br>
+			Master’s Thesis, 2018  <br>
+			[<a href="/docs/thesis.pdf">PDF</a>] [<a href="https://thesis.bul.sbu.usi.ch/theses/1630-1718Ummadisingu/pdf?1539232692">PDF (mirror)</a>] 
+		</li>
 
-  <li style="margin-bottom:10px"> <a href="https://arxiv.org/abs/1711.06006"> <strong> Hindsight Policy Gradients </strong>  </a> <br> 
-    Paulo Rauber, <i>Avinash Ummadisingu</i>, Filipe Mutz, Juergen Schmidhuber  <br>
-    [<a href="https://arxiv.org/abs/1711.06006">paper</a>][<a href="https://github.com/paulorauber/hpg">code</a>][<a href="http://paulorauber.com/hpg.html">website</a>]</li> 
+			<li style="margin-bottom:10px"> <a href="https://arxiv.org/abs/1711.06006"> <strong> Hindsight Policy Gradients </strong>  </a> <br> 
+				Paulo Rauber, <i>Avinash Ummadisingu</i>, Filipe Mutz, Juergen Schmidhuber  <br>
+				[<a href="https://arxiv.org/abs/1711.06006">paper</a>][<a href="https://github.com/paulorauber/hpg">code</a>][<a href="http://paulorauber.com/hpg.html">website</a>]</li> 
 
-  <li> <a href="https://arxiv.org/abs/1711.04694"> <strong> ABCpy: A High-Performance Computing Perspective to Approximate Bayesian Computation </strong>
- </a> <br> Ritabrata Dutta, Marcel Schoengens, <i>Avinash Ummadisingu</i>, Jukka-Pekka Onnela, Antonietta Mira </li>
-    [<a href="https://arxiv.org/abs/1711.04694">paper</a>][<a href="https://github.com/eth-cscs/abcpy">code</a>]</li>
+			<li> <a href="https://arxiv.org/abs/1711.04694"> <strong> ABCpy: A High-Performance Computing Perspective to Approximate Bayesian Computation </strong>
+		 </a> <br> Ritabrata Dutta, Marcel Schoengens, <i>Avinash Ummadisingu</i>, Jukka-Pekka Onnela, Antonietta Mira </li>
+				[<a href="https://arxiv.org/abs/1711.04694">paper</a>][<a href="https://github.com/eth-cscs/abcpy">code</a>]</li>
 
-</ul>
-<h4> Blog Posts: </h4>
-<ul>
-% for post in posts:
-  <li>
-      <strong class="p-name entry-title"><a href="${post.permalink()}" class="u-url">${post.title()|h}</a></strong>
-      <div class="entry-meta">
-      <span class="entry-date date published updated">
-        <time datetime="${post.date.isoformat()}" title="${post.formatted_date(date_format)}">${post.formatted_date(date_format)}</time>
-      % if not post.meta('nocomments') and site_has_comments:
-          &nbsp;&nbsp;&middot;&nbsp;&nbsp;<span class="commentline">${comments.comment_link(post.permalink(), post._base_path)}</span>
-      % endif
-    </span>
-      </div>
-  </li>
-% endfor
-</ul>
-    </article>
-% endfor
+		</ul>
+		<h4> Blog Posts: </h4>
+		<ul>
+		% for post in posts:
+			% if post.meta("category")=="blog":
+			<li>
+					<strong class="p-name entry-title"><a href="${post.permalink()}" class="u-url">${post.title()|h}</a></strong>
+					<div class="entry-meta">
+					<span class="entry-date date published updated">
+						<time datetime="${post.date.isoformat()}" title="${post.formatted_date(date_format)}">${post.formatted_date(date_format)}</time>
+					% if not post.meta('nocomments') and site_has_comments:
+							&nbsp;&nbsp;&middot;&nbsp;&nbsp;<span class="commentline">${comments.comment_link(post.permalink(), post._base_path)}</span>
+					% endif
+				</span>
+					</div>
+			</li>
+			% endif
+		% endfor
+		</ul>
+
+		<h4> Paper Notes: </h4>
+		<ul>
+		% for post in posts:
+			% if post.meta("category")=="notes":
+			<li>
+					<strong class="p-name entry-title"><a href="${post.permalink()}" class="u-url">${post.title()|h}</a></strong>
+					<div class="entry-meta">
+					<span class="entry-date date published updated">
+						<time datetime="${post.date.isoformat()}" title="${post.formatted_date(date_format)}">${post.formatted_date(date_format)}</time>
+					% if not post.meta('nocomments') and site_has_comments:
+							&nbsp;&nbsp;&middot;&nbsp;&nbsp;<span class="commentline">${comments.comment_link(post.permalink(), post._base_path)}</span>
+					% endif
+				</span>
+					</div>
+			</li>
+		%endif
+		% endfor
+		</ul>
+</article>
+
 ${helper.html_pager()}
 ${comments.comment_link_script()}
 ${helper.mathjax_script(posts)}

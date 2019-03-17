@@ -4,7 +4,12 @@
 
 <%def name="html_title()">
 %if title and not post.meta('hidetitle'):
-    <h1 class="p-name entry-title" itemprop="headline name"><a href="${post.permalink()}" class="u-url">${post.title()|h}</a></h1>
+    <h4 class="p-name"><code style="font-weight:800">Paper Summaries and Notes</code></h4>
+    <h2 class="p-name entry-title" itemprop="headline name"><a href="${post.permalink()}" class="u-url">${post.title()|h}</a></h2>
+    %if post.meta("authors"):
+        <h4 class="p-name">${post.meta("authors")}</h4>
+    %endif
+        <h5 class="p-name" style="margin-bottom:20px;"> Source: ${post.meta("source")} </h5>
 %endif
 </%def>
 
@@ -48,6 +53,22 @@
 </header>
 
 </%def>
+
+
+<%def name="html_page_header()">
+
+<header>
+
+    <div class="post-title">
+        ${html_title()}
+        <a class="btn zoombtn" href="/">
+            <i class="fa fa-chevron-left"></i>
+        </a>
+    </div>
+</header>
+
+</%def>
+
 
 <%def name="html_post_headerq()">
     <header>

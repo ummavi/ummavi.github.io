@@ -1,12 +1,12 @@
-<!-- 
+<!--
 .. title: Introduction to Reinforcement Learning
 .. slug: introduction-to-reinforcement-learning
 .. date: 2016-12-28 15:02:29 UTC+01:00
-.. tags: mathjax
-.. category: 
-.. link: 
+.. tags: 
 .. description: I'll describe what Reinforcement Learning is, where it's applicable, some of the key ideas and approaches behind it and some of the challenges faced when building an RL system.
 .. type: text
+.. has_math: yes
+.. category: blog
 -->
 
 
