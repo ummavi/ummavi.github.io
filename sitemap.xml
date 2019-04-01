@@ -7,46 +7,46 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>http://ummavi.github.io/</loc>
-  <lastmod>2019-03-17T10:12:00Z</lastmod>
+  <lastmod>2019-04-01T14:08:00Z</lastmod>
  </url>
  <url>
   <loc>http://ummavi.github.io/2016/</loc>
-  <lastmod>2019-03-17T10:12:00Z</lastmod>
+  <lastmod>2019-04-01T14:08:00Z</lastmod>
  </url>
  <url>
   <loc>http://ummavi.github.io/2019/</loc>
-  <lastmod>2019-03-17T10:12:00Z</lastmod>
+  <lastmod>2019-04-01T14:08:00Z</lastmod>
  </url>
  <url>
   <loc>http://ummavi.github.io/archive.html</loc>
-  <lastmod>2019-03-17T10:30:00Z</lastmod>
+  <lastmod>2019-04-01T14:08:00Z</lastmod>
  </url>
  <url>
   <loc>http://ummavi.github.io/categories/</loc>
-  <lastmod>2019-03-17T10:14:00Z</lastmod>
+  <lastmod>2019-04-01T14:08:00Z</lastmod>
  </url>
  <url>
   <loc>http://ummavi.github.io/categories/cat_blog/</loc>
-  <lastmod>2019-03-17T10:14:00Z</lastmod>
+  <lastmod>2019-04-01T14:08:00Z</lastmod>
  </url>
  <url>
   <loc>http://ummavi.github.io/categories/cat_notes/</loc>
-  <lastmod>2019-03-17T10:12:00Z</lastmod>
+  <lastmod>2019-04-01T14:08:00Z</lastmod>
  </url>
  <url>
-  <loc>http://ummavi.github.io/categories/cat_posts/</loc>
-  <lastmod>2019-03-17T10:12:00Z</lastmod>
+  <loc>http://ummavi.github.io/notes/grasp2vec/</loc>
+  <lastmod>2019-04-01T14:08:00Z</lastmod>
  </url>
  <url>
   <loc>http://ummavi.github.io/notes/supersizing_selfsupervision/</loc>
-  <lastmod>2019-03-17T10:12:00Z</lastmod>
+  <lastmod>2019-04-01T14:08:00Z</lastmod>
  </url>
  <url>
   <loc>http://ummavi.github.io/posts/introduction-to-reinforcement-learning/</loc>
-  <lastmod>2019-03-17T10:12:00Z</lastmod>
+  <lastmod>2019-04-01T14:08:00Z</lastmod>
  </url>
  <url>
   <loc>http://ummavi.github.io/the-reading-list/</loc>
-  <lastmod>2019-03-17T10:12:00Z</lastmod>
+  <lastmod>2019-04-01T14:08:00Z</lastmod>
  </url>
 </urlset>
