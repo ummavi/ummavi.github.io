@@ -12,17 +12,17 @@
 -->
 
 
-###Key Ideas: 
+## Key Ideas: 
 * Learning-based robotic grasping that learns from trial-and-error experiments historically use small datasets that may lead to overfitting. Acquire create a dataset with 40x the data to train a CNN to predict grasp locations to generalize better on unseen objects.
 * Recast $(x,y,\theta)$ as an 18-way binary classification task more suited for CNNs.
 * Use multi-stage (curriculum) training to progressively improve its performance.
 
 
-###Why is it difficult?
+## Why is it difficult?
 * Using 3D information often requires the fitting of a 3D model to the data- a challenging task unto itself. It also ignores the mass distribution of objects which are crucial in these methods.
 * Getting humans to exhaustively label data is impossible because of the myriad possible ways to pick up an object. There are also inherent human biases (such as cups always picked up by the handle) that are introduced.
 
-###Solution:
+## Solution:
 Use a self-supervising algorithm to learn to predict grasp locations from images using trial-and-error like RL. The problem setup using a Baxter robot performing _planar grasps_. Therefore, a grasp configuration is given by $(x,y,\theta)$, the position of the grasp point on the surface of the table and the angle of the grasp of the two-fingered robot.
 
 * **Trial-and-Error Data Collection Pipeline: **
