@@ -9,7 +9,7 @@
     %if post.meta("authors"):
         <h4 class="p-name">${post.meta("authors")}</h4>
     %endif
-        <h5 class="p-name" style="margin-bottom:20px;"> Source: ${post.meta("source")} </h5>
+        <h5 class="p-name" style="margin-bottom:20px;"> <a href="${post.meta('source')}"> Source: ${post.meta("source")} </a></h5>
 %endif
 </%def>
 

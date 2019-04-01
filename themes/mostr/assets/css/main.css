@@ -82,6 +82,7 @@ table {
 
 table, th, td {
     border: 1px solid black;
+    border-collapse: collapse;
 }
 
 .readmore{
@@ -2278,6 +2279,7 @@ h4,
 h5,
 h6 {
     font-family: "Montserrat", Calibri, Arial, sans-serif;
+    font-weight: 800;
 }
 h1 {
     font-size: 28px;
