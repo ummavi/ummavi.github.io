@@ -67,6 +67,7 @@ hr{
 
 #frontpage-content-section{
 	width: 70%; 
+	min-width: 300px;
 	margin: auto;
 	border:1px solid #DDDDDD; 
 	padding-bottom: 60px;
