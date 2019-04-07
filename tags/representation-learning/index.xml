@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Representation Learning on About machines that learn</title>
+    <link>https://ummavi.github.io/tags/representation-learning/</link>
+    <description>Recent content in Representation Learning on About machines that learn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 31 Mar 2019 15:46:07 +0100</lastBuildDate>
+    
+	<atom:link href="https://ummavi.github.io/tags/representation-learning/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Grasp2Vec- Learning Object Representations from Self-Supervised Grasping</title>
+      <link>https://ummavi.github.io/posts/grasp2vec/</link>
+      <pubDate>Sun, 31 Mar 2019 15:46:07 +0100</pubDate>
+      
+      <guid>https://ummavi.github.io/posts/grasp2vec/</guid>
+      <description>Key Ideas:  Learn a (self-supervised) structured visual representation based on object persistence- that the representation of a scene before and after an object is removed should be dependent on the features of the removed object. Formulated as a simple algebraic relationship: \(\phi_s([\square \star \bigtriangleup]) - \phi_s([\square \quad \bigtriangleup]) = \phi_o([\star]) \) Learning of structured representations of the objects and scenes enables a number of useful tasks such as identifying which object(s) in a scene were grasped, localizing them and performing goal-directed grasping tasks in a fully self-supervised manner without the need for human supervision.</description>
+    </item>
+    
+  </channel>
+</rss>

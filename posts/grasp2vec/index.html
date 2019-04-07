@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Grasp2Vec- Learning Object Representations from Self-Supervised Grasping | About machines that learn</title>
+
+
+
+<link href="https://ummavi.github.io/index.xml" rel="alternate" type="application/rss+xml" title="About machines that learn" />
+
+<link rel="stylesheet" href="/css/style.css"/><link rel='stylesheet' href='https://ummavi.github.io/css/custom.css'><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<div class="nav_container">
+  <nav class="nav">
+    <div class="nav-left">
+      <a class="nav-item" href="https://ummavi.github.io">
+        <h1 class="title is-4">About machines that learn</h1>
+      </a>
+
+
+    </div>
+
+    <div class="nav-right"><a class="nav-item" href="/">
+          <h2 class="title is-5">Home</h2>
+        </a><a class="nav-item" href="/posts">
+          <h2 class="title is-5">Blog &#43; Paper Summaries</h2>
+        </a><nav class="nav-item social is-mobile"><a class="level-item" aria-label="email" href='mailto:avinash.umm[at]gmail.com'
+              target='_blank' rel='noopener'>
+              <span class="icon">
+                <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+              </span>
+            </a><a class="level-item" aria-label="github" href='https://github.com/ummavi'
+              target='_blank' rel='noopener'>
+              <span class="icon">
+                <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+              </span>
+            </a><a class="level-item" aria-label="twitter" href='https://twitter.com/ummavi'
+              target='_blank' rel='noopener'>
+              <span class="icon">
+                <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+              </span>
+            </a><a class="level-item" aria-label="linkedin" href='https://linkedin.com/in/avinashumm'
+              target='_blank' rel='noopener'>
+              <span class="icon">
+                <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path stroke-width="1.8" d="m5.839218,4.101561c0,1.211972 -0.974141,2.194011 -2.176459,2.194011s-2.176459,-0.982039 -2.176459,-2.194011c0,-1.211094 0.974141,-2.194011 2.176459,-2.194011s2.176459,0.982917 2.176459,2.194011zm0.017552,3.94922l-4.388022,0l0,14.04167l4.388022,0l0,-14.04167zm7.005038,0l-4.359939,0l0,14.04167l4.360816,0l0,-7.370999c0,-4.098413 5.291077,-4.433657 5.291077,0l0,7.370999l4.377491,0l0,-8.89101c0,-6.915523 -7.829986,-6.66365 -9.669445,-3.259423l0,-1.891237z"/>
+    
+  </svg></i>
+              </span>
+            </a><a class="level-item" aria-label="instagram" href='https://instagram.com/avinashummadisingu'
+              target='_blank' rel='noopener'>
+              <span class="icon">
+                <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+    <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/>
+    
+  </svg></i>
+              </span>
+            </a></nav>
+          </div>
+
+  </nav>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="subtitle tags is-6 is-pulled-right">
+      
+      
+<a class="subtitle is-6" href="/tags/robotic-grasping">#robotic grasping</a>
+
+
+
+  
+  | <a class="subtitle is-6" href="/tags/rl">#rl</a>
+  
+  | <a class="subtitle is-6" href="/tags/representation-learning">#representation learning</a>
+  
+
+      
+    </div>
+    <h2 class="subtitle is-6">March 31, 2019</h2>
+    <h1 class="title">Grasp2Vec- Learning Object Representations from Self-Supervised Grasping</h1>
+    
+    <h2 class="subtitle is-5 halfflushbottom"> Eric Jang, Coline Devin, Vincent Vanhoucke and Sergey Levine </h2>
+    
+    
+    <h5 class="subtitle is-6"> Source: <a href="https://arxiv.org/abs/1811.06964"> https://arxiv.org/abs/1811.06964 </a> </h5>
+    
+
+    
+
+
+
+    
+    <div class="content">
+      <h2 id="key-ideas">Key Ideas:</h2>
+
+<ul>
+<li>Learn a (self-supervised) structured visual representation based on object persistence- that the representation of a scene before and after an object is removed should be dependent on the features of the removed object.
+Formulated as a simple algebraic relationship:
+<span  class="math">\(\phi_s([\square \star \bigtriangleup]) - \phi_s([\square \quad \bigtriangleup]) = \phi_o([\star]) \)</span></li>
+<li>Learning of structured representations of the objects and scenes enables a number of useful tasks such as identifying which object(s) in a scene were grasped, localizing them and performing goal-directed grasping tasks in a fully self-supervised manner without the need for human supervision.</li>
+</ul>
+
+<h3 id="grasp2vec">Grasp2Vec</h3>
+
+<ul>
+<li>Consider an image of a scene <span  class="math">\(s_{pre}\)</span> with some objects. A robotic arm performs a grasp attempt. The resulting scene <span  class="math">\(s_{post}\)</span> therefore has either the same objects as before, or fewer (depending on how many objects were picked up, if any). The robot holds up any grasped object(s) to a camera taking an outcome image <span  class="math">\( o \)</span>.</li>
+<li><span  class="math">\(\phi_s(s_{pre})\)</span>  and <span  class="math">\(\phi_s(s_{post})\)</span>  are vector embeddings of the scene images  <span  class="math">\(s_{pre}\)</span> and <span  class="math">\(s_{post}\)</span> respectively.  <span  class="math">\(\phi_o(o)\)</span> is the vector embedding of the outcome object <span  class="math">\( o \)</span></li>
+<li>Framed as a metric learning problem, the embeddings <span  class="math">\(\phi_s\)</span> and <span  class="math">\(\phi_o\)</span> are to be learnt such that <span  class="math">\(\phi_s(s_{pre}) - \phi_s(s_{post}) \)</span> is made close to <span  class="math">\(\phi_o(o)\)</span>, the embedding of the object that was grasped and far away from the embeddings of other objects that were not grasped.</li>
+<li>In order to learn the embeddings, a Convolutional Neural Network based on  ResNet-50 is used for both embeddings with ReLUs and global average-pooling of features. The non-negativity constrains an object from being the inverse of another.</li>
+<li>The <a href="https://papers.nips.cc/paper/6200-improved-deep-metric-learning-with-multi-class-n-pair-loss-objective">n-pair loss</a> is used as a loss function so that in a given minibatch, the corresponding pairs of   <span  class="math">\(\phi_s(s_{pre}) - \phi(s_{post}) \)</span> and <span  class="math">\(\phi_o(o)\)</span> of objects that were grasped are pushed together while all other objects in the minibatch are treated as &quot;negative&quot; embeddings and pushed apart. Since the loss is asymmetrical, it is evaluated in both orders as below:  <span  class="math">\( L_{\text { Grasp}2 \mathrm{Vec}}=\mathrm{NPairs}\left(\left(\phi_{s}\left(s_{pre}\right)-\phi_{s}\left(s_{post}\right)\right), \phi_{o}(o)\right)+\operatorname{NPairs}\left(\phi_{o}(o),\left(\phi_{s}\left(s_{pre}\right)-\phi_{s}\left(s_{post}\right)\right)\right) \)</span></li>
+</ul>
+
+<h3 id="selfsupervised-goalconditioned-grasping">Self-Supervised Goal-Conditioned Grasping</h3>
+
+<ul>
+<li>The goal-conditional grasping problem is framed as an MDP with an aim to learn <span  class="math">\(Q_\pi(s, a, g)\)</span>  where <span  class="math">\( s \)</span> is an image of the current scene, the action <span  class="math">\( a \)</span> controls the gripper's cartesian and open/close and the goal <span  class="math">\( g \)</span> specifies which object should be grasped. When an object specified by <span  class="math">\( g \)</span> is successfully grasped by the terminal state, a reward of 1 is given and 0 for all others.</li>
+<li>This sparse reward setting makes learning challenging due to the rarity of successful, rewarding grasps, especially at the beginning of training. To alleviate this, the following techniques are  introduced
+
+<ul>
+<li><strong>Embedding Similarity:</strong> Provides a measure of how &quot;close&quot; an object <span  class="math">\( o \)</span> that was grasped is to the original goal <span  class="math">\( g \)</span>. The Grasp2Vec representations can be used by setting <span  class="math">\(r = \hat{\phi_o}(g) . \hat{\phi_o}(o)\)</span></li>
+<li><strong>Posthoc Labelling:</strong> Uses ideas introduced in <a href="https://arxiv.org/abs/1707.01495">HER (Andrychowicz et al.)</a>. If a object <span  class="math">\( o (\ne g)\)</span> was unintentionally grasped, it is treated as the intentional goal and <span  class="math">\((s,a,o,r = 1)\)</span> is added to the replay buffer.</li>
+<li><strong>Auxiliary Goal Augmentation:</strong>  Samples an additional goal <span  class="math">\(g' (\ne g)\)</span>. If a goal g was successfully achieved, the embedding similarity is used to reward the auxiliary goal  and <span  class="math">\((s,a,g',r =  \hat{\phi_o}(g') . \hat{\phi_o}(o))\)</span> is added to the replay buffer.</li>
+</ul></li>
+</ul>
+
+<h2 id="results">Results</h2>
+
+<ul>
+<li><strong>Grasp2Vec embedding:</strong> The results show that Grasp2Vec embeddings do work as intended.
+
+<ul>
+<li>Scene embeddings <span  class="math">\(\phi_s\)</span> capture object presence/absence and are unaffected by their location. This is verified by looking at the nearest neighbour images of the scenes in embedding space as shown in the image below, taken from <a href="https://arxiv.org/abs/1811.06964">the paper</a> <img src="/img/summaries/grasp2vec_res1.png" ></li>
+<li>Embeddings can be used to identify which object was grasped by looking at the difference  <span  class="math">\(\phi_s(s_{pre}) - \phi_s(s_{post})\)</span>. The same can also be used to localize the object as shown in the pictures below, also directly taken from <a href="https://arxiv.org/abs/1811.06964">the paper</a>  <img src="/img/summaries/grasp2vec_res2.png" ></li>
+<li>Results of both the nearest neighbour retrieval and localization perform significantly better using the embeddings rather than a baseline trained on ImageNet.</li>
+</ul></li>
+<li><strong>Goal-Conditional Grasping:</strong> An ablation study whose results are shown in the table below (acquired from <a href="https://arxiv.org/abs/1811.06964">the paper</a> ) show a number of interesting results in the simulated goal-conditional grasping experiments.
+
+<ul>
+<li>The Posthoc Labelling on its own propel grasp performance from <span  class="math">\( 18.3\% \)</span> to <span  class="math">\(50.4\%\)</span>.</li>
+<li>When combined with the use of Embedding Similarity of Grasp2Vec features as rewards, it achieves an <span  class="math">\(80.1\%\)</span> success rate for seen objects.</li>
+<li>The use of Auxillary Goal Augmentation appears to aid in generalization and improves grasp performance on unseen objects at a slight cost to its performance on seen objects.</li>
+<li>Interestingly, when the goal specification is provided as an object embedding, it hurts performance slightly suggesting embeddings hurt generalization.</li>
+</ul></li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<th>Goal Conditioning</th>
+<th>Reward Labels</th>
+<th>Seen Objects</th>
+<th>Unseen Objects</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Indiscriminate Grasping</td>
+<td>N/A</td>
+<td>18.3</td>
+<td>21.9</td>
+</tr>
+
+<tr>
+<td>Raw Image CNN</td>
+<td>Oracle Labels</td>
+<td>83.9</td>
+<td>43.7</td>
+</tr>
+
+<tr>
+<td>Raw Image CNN</td>
+<td>PL</td>
+<td>50.4</td>
+<td>41.1</td>
+</tr>
+
+<tr>
+<td>Raw Image CNN</td>
+<td>PL + Aux(0)</td>
+<td>22.1</td>
+<td>19.0</td>
+</tr>
+
+<tr>
+<td>Raw Image CNN</td>
+<td>PL + ES (autoencoder)</td>
+<td>18.7</td>
+<td>20.9</td>
+</tr>
+
+<tr>
+<td>Raw Image CNN</td>
+<td>PL + ES (grasp2vec)</td>
+<td>80.1</td>
+<td>53.9</td>
+</tr>
+
+<tr>
+<td>Raw Image CNN</td>
+<td>PL + Aux + ES (grasp2vec)</td>
+<td>78.0</td>
+<td>58.9</td>
+</tr>
+
+<tr>
+<td><span  class="math">\(\phi_o(g)\)</span></td>
+<td>PL + ES (grasp2vec)</td>
+<td>78.4</td>
+<td>45.4</td>
+</tr>
+</tbody>
+</table>
+
+      
+      <div class="related">
+
+<h3>Similar articles:</h3>
+<ul>
+	
+	<li><a href="/posts/supersizing_selfsupervision/">Supersizing Self-supervision- Learning to Grasp from 50K Tries and 700 Robot Hours</a></li>
+	
+	<li><a href="/posts/introduction-to-reinforcement-learning/">Introduction to Reinforcement Learning</a></li>
+	
+</ul>
+</div>
+      
+    </div>
+    
+
+  <div class="" style="margin-bottom:20px"> <strong> <a href="/posts"> &lt; Back to posts </a> </strong> </div>
+    
+  </div>
+
+</section>
+
+
+<section class="section">
+  <div class="container">
+    <aside><div id="disqus_thread"></div></aside>
+  
+    <script type="text/javascript">
+      var disqus_shortname = 'ummavi';
+      function disqus() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+  
+      disqus();
+  
+
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a></p>
+    
+  </div>
+</section>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-89947234-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+</body>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css" integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js" integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        
+        
+        
+        renderMathInElement(document.body, {delimiters: [
+  {left: "$$", right: "$$", display: true},
+  {left: "\\[", right: "\\]", display: true},
+  {left: "\\(", right: "\\)", display: false},
+
+]
+
+
+    });        
+    });
+</script>
+</html>
+

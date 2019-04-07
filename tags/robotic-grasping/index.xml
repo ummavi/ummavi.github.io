@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Robotic Grasping on About machines that learn</title>
+    <link>https://ummavi.github.io/tags/robotic-grasping/</link>
+    <description>Recent content in Robotic Grasping on About machines that learn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 31 Mar 2019 15:46:07 +0100</lastBuildDate>
+    
+	<atom:link href="https://ummavi.github.io/tags/robotic-grasping/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Grasp2Vec- Learning Object Representations from Self-Supervised Grasping</title>
+      <link>https://ummavi.github.io/posts/grasp2vec/</link>
+      <pubDate>Sun, 31 Mar 2019 15:46:07 +0100</pubDate>
+      
+      <guid>https://ummavi.github.io/posts/grasp2vec/</guid>
+      <description>Key Ideas:  Learn a (self-supervised) structured visual representation based on object persistence- that the representation of a scene before and after an object is removed should be dependent on the features of the removed object. Formulated as a simple algebraic relationship: \(\phi_s([\square \star \bigtriangleup]) - \phi_s([\square \quad \bigtriangleup]) = \phi_o([\star]) \) Learning of structured representations of the objects and scenes enables a number of useful tasks such as identifying which object(s) in a scene were grasped, localizing them and performing goal-directed grasping tasks in a fully self-supervised manner without the need for human supervision.</description>
+    </item>
+    
+    <item>
+      <title>Supersizing Self-supervision- Learning to Grasp from 50K Tries and 700 Robot Hours</title>
+      <link>https://ummavi.github.io/posts/supersizing_selfsupervision/</link>
+      <pubDate>Sat, 16 Mar 2019 10:33:12 +0100</pubDate>
+      
+      <guid>https://ummavi.github.io/posts/supersizing_selfsupervision/</guid>
+      <description>Key Ideas:  Learning-based robotic grasping that learns from trial-and-error experiments historically use small datasets that may lead to overfitting. Acquire create a dataset with 40x the data to train a CNN to predict grasp locations to generalize better on unseen objects. Recast \((x,y,\theta)\) as an 18-way binary classification task more suited for CNNs. Use multi-stage (curriculum) training to progressively improve its performance.  Why is it difficult?  Using 3D information often requires the fitting of a 3D model to the data- a challenging task unto itself.</description>
+    </item>
+    
+  </channel>
+</rss>

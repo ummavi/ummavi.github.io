@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Code Available on About machines that learn</title>
+    <link>https://ummavi.github.io/tags/code-available/</link>
+    <description>Recent content in Code Available on About machines that learn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 04 Apr 2019 13:40:12 +0100</lastBuildDate>
+    
+	<atom:link href="https://ummavi.github.io/tags/code-available/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Self-Imitation Learning</title>
+      <link>https://ummavi.github.io/posts/self_imitation_learning/</link>
+      <pubDate>Thu, 04 Apr 2019 13:40:12 +0100</pubDate>
+      
+      <guid>https://ummavi.github.io/posts/self_imitation_learning/</guid>
+      <description>Key Idea:  Try to reinforce an agent&#39;s past behaviour if it led to return that&#39;s better than what is currently expected.  Maintain past episodes in a replay buffer. Given a state, imitate a past action if it resulted in return that was higher than the current critic&#39;s value estimate. Can be applied to any actor-critic architecture. It does not require any off-policy correction like importance weighting. Indirectly improves exploration.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,4 +1,3 @@
-Sitemap: http://ummavi.github.io/sitemapindex.xml
+User-agent: *
 
-User-Agent: *
-Host: ummavi.github.io
+Sitemap: https://ummavi.github.io/sitemap.xml

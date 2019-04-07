@@ -1,52 +1,97 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset
-    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-    xmlns:xhtml="http://www.w3.org/1999/xhtml"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-                        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
- <url>
-  <loc>http://ummavi.github.io/</loc>
-  <lastmod>2019-04-01T14:08:00Z</lastmod>
- </url>
- <url>
-  <loc>http://ummavi.github.io/2016/</loc>
-  <lastmod>2019-04-01T14:08:00Z</lastmod>
- </url>
- <url>
-  <loc>http://ummavi.github.io/2019/</loc>
-  <lastmod>2019-04-01T14:08:00Z</lastmod>
- </url>
- <url>
-  <loc>http://ummavi.github.io/archive.html</loc>
-  <lastmod>2019-04-01T14:08:00Z</lastmod>
- </url>
- <url>
-  <loc>http://ummavi.github.io/categories/</loc>
-  <lastmod>2019-04-01T14:08:00Z</lastmod>
- </url>
- <url>
-  <loc>http://ummavi.github.io/categories/cat_blog/</loc>
-  <lastmod>2019-04-01T14:08:00Z</lastmod>
- </url>
- <url>
-  <loc>http://ummavi.github.io/categories/cat_notes/</loc>
-  <lastmod>2019-04-01T14:08:00Z</lastmod>
- </url>
- <url>
-  <loc>http://ummavi.github.io/notes/grasp2vec/</loc>
-  <lastmod>2019-04-01T14:08:00Z</lastmod>
- </url>
- <url>
-  <loc>http://ummavi.github.io/notes/supersizing_selfsupervision/</loc>
-  <lastmod>2019-04-01T14:08:00Z</lastmod>
- </url>
- <url>
-  <loc>http://ummavi.github.io/posts/introduction-to-reinforcement-learning/</loc>
-  <lastmod>2019-04-01T14:08:00Z</lastmod>
- </url>
- <url>
-  <loc>http://ummavi.github.io/the-reading-list/</loc>
-  <lastmod>2019-04-01T14:08:00Z</lastmod>
- </url>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://ummavi.github.io/posts/self_imitation_learning/</loc>
+    <lastmod>2019-04-04T13:40:12+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ummavi.github.io/posts/grasp2vec/</loc>
+    <lastmod>2019-03-31T15:46:07+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ummavi.github.io/posts/supersizing_selfsupervision/</loc>
+    <lastmod>2019-03-16T10:33:12+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ummavi.github.io/posts/introduction-to-reinforcement-learning/</loc>
+    <lastmod>2016-12-28T15:02:29+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ummavi.github.io/</loc>
+    <lastmod>2019-04-04T13:40:12+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ummavi.github.io/categories/blog/</loc>
+    <lastmod>2016-12-28T15:02:29+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ummavi.github.io/categories/</loc>
+    <lastmod>2016-12-28T15:02:29+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ummavi.github.io/tags/code-available/</loc>
+    <lastmod>2019-04-04T13:40:12+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ummavi.github.io/tags/exploration/</loc>
+    <lastmod>2019-04-04T13:40:12+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ummavi.github.io/tags/intro/</loc>
+    <lastmod>2016-12-28T15:02:29+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ummavi.github.io/categories/notes/</loc>
+    <lastmod>2019-04-04T13:40:12+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ummavi.github.io/posts/</loc>
+    <lastmod>2019-04-04T13:40:12+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ummavi.github.io/tags/representation-learning/</loc>
+    <lastmod>2019-03-31T15:46:07+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ummavi.github.io/tags/rl/</loc>
+    <lastmod>2019-04-04T13:40:12+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ummavi.github.io/tags/robotic-grasping/</loc>
+    <lastmod>2019-03-31T15:46:07+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ummavi.github.io/tags/</loc>
+    <lastmod>2019-04-04T13:40:12+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
 </urlset>

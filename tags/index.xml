@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on About machines that learn</title>
+    <link>https://ummavi.github.io/tags/</link>
+    <description>Recent content in Tags on About machines that learn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 04 Apr 2019 13:40:12 +0100</lastBuildDate>
+    
+	<atom:link href="https://ummavi.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Code Available</title>
+      <link>https://ummavi.github.io/tags/code-available/</link>
+      <pubDate>Thu, 04 Apr 2019 13:40:12 +0100</pubDate>
+      
+      <guid>https://ummavi.github.io/tags/code-available/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Exploration</title>
+      <link>https://ummavi.github.io/tags/exploration/</link>
+      <pubDate>Thu, 04 Apr 2019 13:40:12 +0100</pubDate>
+      
+      <guid>https://ummavi.github.io/tags/exploration/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Intro</title>
+      <link>https://ummavi.github.io/tags/intro/</link>
+      <pubDate>Wed, 28 Dec 2016 15:02:29 +0100</pubDate>
+      
+      <guid>https://ummavi.github.io/tags/intro/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Representation Learning</title>
+      <link>https://ummavi.github.io/tags/representation-learning/</link>
+      <pubDate>Sun, 31 Mar 2019 15:46:07 +0100</pubDate>
+      
+      <guid>https://ummavi.github.io/tags/representation-learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rl</title>
+      <link>https://ummavi.github.io/tags/rl/</link>
+      <pubDate>Thu, 04 Apr 2019 13:40:12 +0100</pubDate>
+      
+      <guid>https://ummavi.github.io/tags/rl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Robotic Grasping</title>
+      <link>https://ummavi.github.io/tags/robotic-grasping/</link>
+      <pubDate>Sun, 31 Mar 2019 15:46:07 +0100</pubDate>
+      
+      <guid>https://ummavi.github.io/tags/robotic-grasping/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

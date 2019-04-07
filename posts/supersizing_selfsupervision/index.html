@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Supersizing Self-supervision- Learning to Grasp from 50K Tries and 700 Robot Hours | About machines that learn</title>
+
+
+
+<link href="https://ummavi.github.io/index.xml" rel="alternate" type="application/rss+xml" title="About machines that learn" />
+
+<link rel="stylesheet" href="/css/style.css"/><link rel='stylesheet' href='https://ummavi.github.io/css/custom.css'><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<div class="nav_container">
+  <nav class="nav">
+    <div class="nav-left">
+      <a class="nav-item" href="https://ummavi.github.io">
+        <h1 class="title is-4">About machines that learn</h1>
+      </a>
+
+
+    </div>
+
+    <div class="nav-right"><a class="nav-item" href="/">
+          <h2 class="title is-5">Home</h2>
+        </a><a class="nav-item" href="/posts">
+          <h2 class="title is-5">Blog &#43; Paper Summaries</h2>
+        </a><nav class="nav-item social is-mobile"><a class="level-item" aria-label="email" href='mailto:avinash.umm[at]gmail.com'
+              target='_blank' rel='noopener'>
+              <span class="icon">
+                <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+              </span>
+            </a><a class="level-item" aria-label="github" href='https://github.com/ummavi'
+              target='_blank' rel='noopener'>
+              <span class="icon">
+                <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+              </span>
+            </a><a class="level-item" aria-label="twitter" href='https://twitter.com/ummavi'
+              target='_blank' rel='noopener'>
+              <span class="icon">
+                <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+              </span>
+            </a><a class="level-item" aria-label="linkedin" href='https://linkedin.com/in/avinashumm'
+              target='_blank' rel='noopener'>
+              <span class="icon">
+                <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path stroke-width="1.8" d="m5.839218,4.101561c0,1.211972 -0.974141,2.194011 -2.176459,2.194011s-2.176459,-0.982039 -2.176459,-2.194011c0,-1.211094 0.974141,-2.194011 2.176459,-2.194011s2.176459,0.982917 2.176459,2.194011zm0.017552,3.94922l-4.388022,0l0,14.04167l4.388022,0l0,-14.04167zm7.005038,0l-4.359939,0l0,14.04167l4.360816,0l0,-7.370999c0,-4.098413 5.291077,-4.433657 5.291077,0l0,7.370999l4.377491,0l0,-8.89101c0,-6.915523 -7.829986,-6.66365 -9.669445,-3.259423l0,-1.891237z"/>
+    
+  </svg></i>
+              </span>
+            </a><a class="level-item" aria-label="instagram" href='https://instagram.com/avinashummadisingu'
+              target='_blank' rel='noopener'>
+              <span class="icon">
+                <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+    <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/>
+    
+  </svg></i>
+              </span>
+            </a></nav>
+          </div>
+
+  </nav>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="subtitle tags is-6 is-pulled-right">
+      
+      
+<a class="subtitle is-6" href="/tags/robotic-grasping">#robotic grasping</a>
+
+
+
+  
+  | <a class="subtitle is-6" href="/tags/rl">#rl</a>
+  
+
+      
+    </div>
+    <h2 class="subtitle is-6">March 16, 2019</h2>
+    <h1 class="title">Supersizing Self-supervision- Learning to Grasp from 50K Tries and 700 Robot Hours</h1>
+    
+    <h2 class="subtitle is-5 halfflushbottom"> Lerrel Pinto, Abhinav Gupta </h2>
+    
+    
+    <h5 class="subtitle is-6"> Source: <a href="https://arxiv.org/abs/1509.06825"> https://arxiv.org/abs/1509.06825 </a> </h5>
+    
+
+    
+
+
+
+    
+    <div class="content">
+      <h2 id="key-ideas">Key Ideas:</h2>
+
+<ul>
+<li>Learning-based robotic grasping that learns from trial-and-error experiments historically use small datasets that may lead to overfitting. Acquire create a dataset with 40x the data to train a CNN to predict grasp locations to generalize better on unseen objects.</li>
+<li>Recast <span  class="math">\((x,y,\theta)\)</span> as an 18-way binary classification task more suited for CNNs.</li>
+<li>Use multi-stage (curriculum) training to progressively improve its performance.</li>
+</ul>
+
+<h2 id="why-is-it-difficult">Why is it difficult?</h2>
+
+<ul>
+<li>Using 3D information often requires the fitting of a 3D model to the data- a challenging task unto itself. It also ignores the mass distribution of objects which are crucial in these methods.</li>
+<li>Getting humans to exhaustively label data is impossible because of the myriad possible ways to pick up an object. There are also inherent human biases (such as cups always picked up by the handle) that are introduced.</li>
+</ul>
+
+<h2 id="solution">Solution:</h2>
+
+<p>Use a self-supervising algorithm to learn to predict grasp locations from images using trial-and-error like RL. The problem setup using a Baxter robot performing <em>planar grasps</em>. Therefore, a grasp configuration is given by <span  class="math">\((x,y,\theta)\)</span>, the position of the grasp point on the surface of the table and the angle of the grasp of the two-fingered robot.</p>
+
+<ul>
+<li><strong>Trial-and-Error Data Collection Pipeline:</strong>
+Acquire Image from Kinect <span  class="math">\(\rightarrow\)</span> Find objects after MOG subtraction <span  class="math">\(\rightarrow\)</span> Approach random object <span  class="math">\(\rightarrow\)</span> Execute random grasp <span  class="math">\(\rightarrow\)</span> Verify grasp success.</li>
+<li><strong>Learning Architecture:</strong>
+Using a CNN trained with a regression loss to learn <span  class="math">\((x,y,\theta)\)</span> is problematic because there are multiple possible grasp locations for each object, and CNNs are better at classification than regressing to a structured output space.
+<p> Using a simple binary classification on image patches (representative of grasp position <span  class="math">\((x,y)\)</span>) is also not feasible because depending on <span  class="math">\(\theta\)</span>, a grasp may or may not be successful. </p>
+Therefore, the values of <span  class="math">\(\theta\)</span> are discretized into 18 bins (<span  class="math">\(0^\circ, 10^\circ,\dots, 170^\circ\)</span>) and given a patch, an 18-dimensional likelihood vector is estimated.</li>
+<li><strong>Multi-Stage Learning:</strong>
+A network trained on random trail experience (<span  class="math">\(0^{th}\)</span> stage) is used as a prior for another round of data collection. Objects used include those previously seen as well as novel objects to aid generalization. <p>
+The network is then fine-tuned on the data collected (running it with a lower learning rate and for fewer epochs than the <span  class="math">\(0^{th}\)</span> round). </p>
+<p> The process is repeated for <span  class="math">\(k\)</span> rounds.</p></li>
+</ul>
+
+<h3 id="results">Results</h3>
+
+<p>Testing and evaluation is performed on 15 novel objects in several poses. To ensure methods are comparable, the performance of the binary classification is evaluated- ie, given an input and grasp configuration <span  class="math">\((x,y,\theta)\)</span>, will the grasp succeed.</p>
+
+<p>The multi-staged Deep Learning approach yielded an accuracy of 79.5% outperforming common-sense heuristic baselines (53.4% and 59.9%) as well as learning based baselines using HoG features (kNNs: 69.4% and Linear SVM: 73.3%)</p>
+
+      
+      <div class="related">
+
+<h3>Similar articles:</h3>
+<ul>
+	
+	<li><a href="/posts/introduction-to-reinforcement-learning/">Introduction to Reinforcement Learning</a></li>
+	
+</ul>
+</div>
+      
+    </div>
+    
+
+  <div class="" style="margin-bottom:20px"> <strong> <a href="/posts"> &lt; Back to posts </a> </strong> </div>
+    
+  </div>
+
+</section>
+
+
+<section class="section">
+  <div class="container">
+    <aside><div id="disqus_thread"></div></aside>
+  
+    <script type="text/javascript">
+      var disqus_shortname = 'ummavi';
+      function disqus() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+  
+      disqus();
+  
+
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a></p>
+    
+  </div>
+</section>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-89947234-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+</body>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css" integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js" integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        
+        
+        
+        renderMathInElement(document.body, {delimiters: [
+  {left: "$$", right: "$$", display: true},
+  {left: "\\[", right: "\\]", display: true},
+  {left: "\\(", right: "\\)", display: false},
+
+]
+
+
+    });        
+    });
+</script>
+</html>
+

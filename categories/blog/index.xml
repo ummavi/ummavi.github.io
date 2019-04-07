@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog on About machines that learn</title>
+    <link>https://ummavi.github.io/categories/blog/</link>
+    <description>Recent content in Blog on About machines that learn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 28 Dec 2016 15:02:29 +0100</lastBuildDate>
+    
+	<atom:link href="https://ummavi.github.io/categories/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Introduction to Reinforcement Learning</title>
+      <link>https://ummavi.github.io/posts/introduction-to-reinforcement-learning/</link>
+      <pubDate>Wed, 28 Dec 2016 15:02:29 +0100</pubDate>
+      
+      <guid>https://ummavi.github.io/posts/introduction-to-reinforcement-learning/</guid>
+      <description>console.log(&#34;Test&#34;)   console.log(&#34;Loaded!&#34;) var gridworld,vals,vals_old,pe_id; pe_id = -1; var vi_id = -1; // init = rgb(0,4,40); // final = rgb(0,78,146); final_r = 0; final_g = 78; final_b = 146; init_r = 0; init_g = 4; init_b = 40; min_val = -1; max_val = 0; iter_pe=0; (function($){ init_field =function (nrows,ncols,val=&#34;rand&#34;){ //Initialize a 2d array with value val. var arr = []; for(var i=0; i &#39;).addClass(&#39;foo&#39;); for (var i = 0; i &#39;); for (var j = 0; j &#39;).</description>
+    </item>
+    
+  </channel>
+</rss>
