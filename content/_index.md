@@ -4,15 +4,15 @@ balloon_img_src: "uav.jpg"
 balloon_img_src_dark: "uav.jpg"
 balloon_circle: false
 balloon_resources: "/about"
-description: "Demo site of hugo-theme-monochrome"
+description: "Avinash Ummadisingu"
 zooming_js: false
 keywords:
-- hugo
-- hugo theme
-- hugo theme monochrome
-- clean
-- responsive
-- programmer-friendly
+- Reinforcement Learning
+- Avinash
+- Robotics
+- Deep Learning
+- Deep RL
+- AI
 ---
 I'm a researcher at [Preferred Networks, Inc](https://www.preferred.jp/en/) in Tokyo working on enabling robots to learn and problem solve in the real world.
 
