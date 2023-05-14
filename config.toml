@@ -1,0 +1,22 @@
+baseURL = "https://example.com"
+languageCode = "en-us"
+title = "Avinash Ummadisingu"
+theme = "hugo-theme-monochrome"
+defaultContentLanguage = "en"
+enableEmoji = true
+paginate = 5
+googleAnalytics = "UA-89947234-1"
+
+[taxonomies]
+category = "categories"
+tag = "tags"
+series = "series"
+
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
