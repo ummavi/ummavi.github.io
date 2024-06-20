@@ -3,6 +3,28 @@ title: 'Publications'
 weight: 1
 ---
 <ul class="frontpage-list">
+
+<li> <a href="https://arxiv.org/abs/2403.19607"> <strong> SAID-NeRF: Segmentation-AIDed NeRF for Depth Completion of Transparent Objects </strong></a><br/>
+<i>Avinash Ummadisingu</i>, Jongkeum Choi, Koki Yamane, Shimpei Masuda, Naoki Fukaya, Kuniyuki Takahashi <br>
+<i>Under Review</i><br>
+[<a href="https://arxiv.org/abs/2403.19607">paper</a>]</li>
+
+<li> <a href="https://arxiv.org/abs/2309.16170"> <strong> Precise Well-plate Placing Utilizing Contact During Sliding with Tactile-based Pose Estimation for Laboratory Automation </strong></a><br/>
+Sameer Pai, Kuniyuki Takahashi, Shimpei Masuda, Naoki Fukaya, Koki Yamane, <i>Avinash Ummadisingu</i> <br>
+<i>Under Review</i><br>
+[<a href="https://arxiv.org/abs/2309.16170">paper</a>]</li>
+
+<li> <a href="https://arxiv.org/abs/2309.08312"> <strong> Two-fingered Hand with Gear-type Synchronization Mechanism with Magnet for Improved Small and Offset Objects Grasping: F2 Hand </strong></a><br/>
+Naoki Fukaya, <i>Avinash Ummadisingu</i>, Kuniyuki Takahashi, Guilherme Maeda, Shin-ichi Maeda <br>
+Accepted to <i>IROS 2023</i><br>
+[<a href="https://arxiv.org/abs/2309.08312">paper</a>]</li>
+
+<li> <a href="https://arxiv.org/abs/2206.06556"> <strong> F3 Hand: A Versatile Robot Hand Inspired by Human Thumb and Index Fingers </strong></a><br/>
+Naoki Fukaya, <i>Avinash Ummadisingu</i>, Guilherme Maeda, Shin-ichi Maeda <br>
+Accepted to <i>IEEE RO-MAN 2022</i><br>
+[<a href="https://arxiv.org/abs/2206.06556">paper</a>]</li>
+
+
 <li> <a href="https://arxiv.org/abs/2203.05187"> <strong> Cluttered Food Grasping with Adaptive Fingers and Synthetic-Data Trained Object Detection
 </strong></a><br/>
 <i>Avinash Ummadisingu</i>, Kuniyuki Takahashi, Naoki Fukaya  <br>

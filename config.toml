@@ -1,11 +1,10 @@
-baseURL = "https://example.com"
+baseURL = "https://ummavi.github.io"
 languageCode = "en-us"
 title = "Avinash Ummadisingu"
 theme = "hugo-theme-monochrome"
 defaultContentLanguage = "en"
 enableEmoji = true
 paginate = 5
-googleAnalytics = "UA-89947234-1"
 
 [taxonomies]
 category = "categories"
@@ -20,3 +19,7 @@ home = ["HTML", "RSS", "JSON"]
     [markup.goldmark.renderer]
       unsafe = true
 
+
+[services]
+  [services.googleAnalytics]
+    id = 'G-JVYXYEF433'
